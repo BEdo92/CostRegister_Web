@@ -1,0 +1,14 @@
+<form #registerForm="ngForm" (ngSubmit)="register()">
+    <h2 class="text-center text-primary">Regisztráció</h2>
+    <hr>
+    <div class="form-group">
+        <input type="text" class="form-control" required name="userName" [(ngModel)]=" model.userName " placeholder="Felhasználónév ">
+    </div>
+    <div class="form-group ">
+        <input type="password " class="form-control " required name="password" [(ngModel)]="model.password " placeholder="Jelszó ">
+    </div>
+    <div class="form-group text-center">
+        <button class="btn btn-success" type="submit">Küldés</button>
+        <button class="btn btn-default" type="button" (click)="cancel()">Mégse</button>
+    </div>
+</form>

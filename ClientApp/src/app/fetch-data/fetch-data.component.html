@@ -1,0 +1,18 @@
+<h1 id="tableLabel">Get categories</h1>
+
+<p *ngIf="!categories"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="categories">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Kategoria neve</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{ category.categoryid }}</td>
+      <td>{{ category.categoryname }}</td>
+    </tr>
+  </tbody>
+</table>
