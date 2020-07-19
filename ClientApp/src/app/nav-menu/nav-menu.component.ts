@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,7 +12,7 @@ export class NavMenuComponent implements OnInit {
   isExpanded = false;
   model: any = {};
 
- constructor(public authService: AuthService) {}
+ constructor(public authService: AuthService, private router: Router) {}
 
   collapse() {
     this.isExpanded = false;
@@ -29,6 +30,9 @@ export class NavMenuComponent implements OnInit {
       console.log('Logged in successfully!');
     }, error => {
       console.log('Failed to log in!');
+      alert('Bejelentkezes sikertelen!');
+    }, () => {
+    this.router.navigate(['/costs']);
     });
   }
 
@@ -37,7 +41,9 @@ export class NavMenuComponent implements OnInit {
   }
 
   logOut() {
-    localStorage.removeItem('token');
+    //localStorage.removeItem('token');
+    this.authService.logOut();
     console.log('Logged out!');
+    this.router.navigate(['/']);
   }
 }

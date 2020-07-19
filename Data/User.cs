@@ -13,5 +13,10 @@ namespace CostRegApp2.Data
         public string UserName { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public DateTime Created { get; set; }
+        public string Email { get; set; }
+        public ICollection<Costs> Costs { get; set; }
+        public ICollection<Income> Income { get; set; }
+        public ICollection<CostPlans> CostPlans { get; set; }
     }
 }

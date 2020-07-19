@@ -37,4 +37,8 @@ login(model: any) {
     return !!token;
     //return this.jwtHelper.isTokenExpired(token);
   }
+
+  logOut() {
+    localStorage.removeItem('token');
+  }
 }

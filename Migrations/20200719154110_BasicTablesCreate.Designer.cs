@@ -4,14 +4,16 @@ using CostRegApp2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CostRegApp2.Migrations
 {
     [DbContext(typeof(CostRegContext))]
-    partial class CostRegContextModelSnapshot : ModelSnapshot
+    [Migration("20200719154110_BasicTablesCreate")]
+    partial class BasicTablesCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace CostRegApp2.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -92,7 +94,7 @@ namespace CostRegApp2.Migrations
                     b.Property<int>("ShopID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -124,7 +126,7 @@ namespace CostRegApp2.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("IncomeID");
@@ -132,21 +134,6 @@ namespace CostRegApp2.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Income");
-                });
-
-            modelBuilder.Entity("CostRegApp2.Data.Shops", b =>
-                {
-                    b.Property<int>("ShopId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ShopName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ShopId");
-
-                    b.ToTable("Shops");
                 });
 
             modelBuilder.Entity("CostRegApp2.Data.User", b =>
@@ -178,29 +165,23 @@ namespace CostRegApp2.Migrations
 
             modelBuilder.Entity("CostRegApp2.Data.CostPlans", b =>
                 {
-                    b.HasOne("CostRegApp2.Data.User", "User")
+                    b.HasOne("CostRegApp2.Data.User", null)
                         .WithMany("CostPlans")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("CostRegApp2.Data.Costs", b =>
                 {
-                    b.HasOne("CostRegApp2.Data.User", "User")
+                    b.HasOne("CostRegApp2.Data.User", null)
                         .WithMany("Costs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("CostRegApp2.Data.Income", b =>
                 {
-                    b.HasOne("CostRegApp2.Data.User", "User")
+                    b.HasOne("CostRegApp2.Data.User", null)
                         .WithMany("Income")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
