@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CostRegApp2.Data
 {
@@ -7,5 +8,6 @@ namespace CostRegApp2.Data
         [Key]
         public int ShopId { get; set; }
         public string ShopName { get; set; }
+        public ICollection<Costs> Costs { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CostRegApp2.Data
@@ -24,5 +25,6 @@ namespace CostRegApp2.Data
         public string PlanAdditionalInformation { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
+        public Categories Category { get; set; }
     }
 }

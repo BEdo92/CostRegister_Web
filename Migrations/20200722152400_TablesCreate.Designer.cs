@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CostRegApp2.Migrations
 {
     [DbContext(typeof(CostRegContext))]
-    [Migration("20200719162506_AddTables")]
-    partial class AddTables
+    [Migration("20200722152400_TablesCreate")]
+    partial class TablesCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,8 @@ namespace CostRegApp2.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CategoryID");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("CostPlans");
@@ -98,6 +100,10 @@ namespace CostRegApp2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("ShopID");
 
                     b.HasIndex("UserId");
 
@@ -180,6 +186,12 @@ namespace CostRegApp2.Migrations
 
             modelBuilder.Entity("CostRegApp2.Data.CostPlans", b =>
                 {
+                    b.HasOne("CostRegApp2.Data.Categories", "Category")
+                        .WithMany("CostPlans")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CostRegApp2.Data.User", "User")
                         .WithMany("CostPlans")
                         .HasForeignKey("UserId")
@@ -189,6 +201,18 @@ namespace CostRegApp2.Migrations
 
             modelBuilder.Entity("CostRegApp2.Data.Costs", b =>
                 {
+                    b.HasOne("CostRegApp2.Data.Categories", "Category")
+                        .WithMany("Costs")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CostRegApp2.Data.Shops", "Shop")
+                        .WithMany("Costs")
+                        .HasForeignKey("ShopID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CostRegApp2.Data.User", "User")
                         .WithMany("Costs")
                         .HasForeignKey("UserId")

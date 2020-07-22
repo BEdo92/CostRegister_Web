@@ -1,3 +1,4 @@
+using AutoMapper;
 using CostRegApp2.Data;
 using CostRegApp2.Helpers;
 using CostRegApp2.Repositories;
@@ -39,7 +40,11 @@ namespace CostRegApp2
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddAutoMapper(typeof(CostRegRepository).Assembly);
+
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<ICostRegRepository, CostRegRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
@@ -86,7 +91,7 @@ namespace CostRegApp2
             }
 
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

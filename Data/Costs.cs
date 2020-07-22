@@ -17,5 +17,7 @@ namespace CostRegApp2.Data
         public string AdditionalInformation { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
+        public Categories Category { get; set; }
+        public Shops Shop { get; set; }
     }
 }

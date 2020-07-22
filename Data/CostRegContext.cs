@@ -16,5 +16,34 @@ namespace CostRegApp2.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Categories>()
+                .HasMany(c => c.Costs)
+                .WithOne(c => c.Category);
+
+            modelBuilder.Entity<Categories>()
+                .HasMany(c => c.CostPlans)
+                .WithOne(c => c.Category);
+
+            modelBuilder.Entity<Shops>()
+                .HasMany(c => c.Costs)
+                .WithOne(p => p.Shop);
+
+            modelBuilder.Entity<User>()
+             .HasMany(c => c.Costs)
+             .WithOne(p => p.User);
+
+            modelBuilder.Entity<User>()
+             .HasMany(c => c.CostPlans)
+             .WithOne(p => p.User);
+
+            modelBuilder.Entity<User>()
+             .HasMany(c => c.Income)
+             .WithOne(p => p.User);
+
+            //base.OnModelCreating(modelBuilder);
+        }
     }
 }
