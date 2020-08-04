@@ -40,12 +40,18 @@ namespace CostRegApp2.Controllers
             
             var userToCreate = new User
             {
-                UserName = userNameToSave
+                UserName = userNameToSave,
+                Created = DateTime.Now
             };
 
             var createdUser = await _repo.Register(userToCreate, userDto.Password);
 
-            return StatusCode(201);
+            if (createdUser != null)
+            {
+                return StatusCode(201);
+            }
+
+            return BadRequest("New user was not created!");
         }
 
         [HttpPost("login")]

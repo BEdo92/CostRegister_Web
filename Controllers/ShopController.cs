@@ -1,10 +1,7 @@
-﻿using CostRegApp2.Data;
-using CostRegApp2.Repositories;
+﻿using CostRegApp2.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,8 +24,10 @@ namespace CostRegApp2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShops()
         {
-            var cats = await _repo.GetShops();
-            return Ok(cats);
+            var shops = await _repo.GetShops();
+            var shopNames = shops.Select(s => s.ShopName);
+
+            return Ok(shopNames);
         }
     }
 }

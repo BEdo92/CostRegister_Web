@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CostRegApp2
 {
@@ -45,15 +46,7 @@ namespace CostRegApp2
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<ICostRegRepository, CostRegRepository>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => 
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Appsettings:Token").Value))
-                    };
-                });
+            SetupJWTServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +76,7 @@ namespace CostRegApp2
                 //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
@@ -91,7 +84,11 @@ namespace CostRegApp2
             }
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -111,8 +108,45 @@ namespace CostRegApp2
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+        }
 
-            app.UseAuthentication();
+        private void SetupJWTServices(IServiceCollection services)
+        {
+            string key = Configuration.GetSection("AppSettings:Token").Value;  
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                  .AddJwtBearer(options =>
+                  {
+                      options.TokenValidationParameters = new TokenValidationParameters
+                      {
+                          ValidateIssuer = false, // localhost
+                          ValidateAudience = false, // localhost
+                          ValidateIssuerSigningKey = true,
+                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key))
+                      };
+
+                      //options.Events = new JwtBearerEvents
+                      //{
+                      //    OnAuthenticationFailed = context =>
+                      //    {
+                      //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                      //        {
+                      //            context.Response.Headers.Add("Token-Expired", "true");
+                      //        }
+                      //        return Task.CompletedTask;
+                      //    }
+                      //};                      //options.Events = new JwtBearerEvents
+                      //{
+                      //    OnAuthenticationFailed = context =>
+                      //    {
+                      //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                      //        {
+                      //            context.Response.Headers.Add("Token-Expired", "true");
+                      //        }
+                      //        return Task.CompletedTask;
+                      //    }
+                      //};
+                  });
         }
     }
 }

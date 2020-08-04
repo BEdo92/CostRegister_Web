@@ -1,7 +1,6 @@
 ﻿using CostRegApp2.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CostRegApp2.Repositories
@@ -25,28 +24,25 @@ namespace CostRegApp2.Repositories
             _context.Remove(entity);
         }
 
-        public async Task<IEnumerable<User>> GetCostsOfUser(int id)
+        public async Task<IEnumerable<Costs>> GetCostsOfUser(int id)
         {
-            var user = await _context.Users.Include(u => u.Costs)
-                                           .Where(i => i.UserId == id)
-                                           .ToListAsync();
-            return user;
+            var costsOfUser = await _context.Costs.Include(u => u.User).ToListAsync();
+
+            return costsOfUser;
         }
 
-        public async Task<IEnumerable<User>> GetIncomeOfUser(int id)
+        public async Task<IEnumerable<Income>> GetIncomeOfUser(int id)
         {
-            var user = await _context.Users.Include(u => u.Income)
-                                           .Where(i => i.UserId == id)
-                                           .ToListAsync();
-            return user;
+            var incomeOfUser = await _context.Income.Include(u => u.User).ToListAsync();
+
+            return incomeOfUser;
         }
 
-        public async Task<IEnumerable<User>> GetCostPlanOfUser(int id)
+        public async Task<IEnumerable<CostPlans>> GetCostPlanOfUser(int id)
         {
-            var user = await _context.Users.Include(u => u.CostPlans)
-                                           .Where(i => i.UserId == id)
-                                           .ToListAsync();
-            return user;
+            var costPlanOfUser = await _context.CostPlans.Include(u => u.User).ToListAsync();
+
+            return costPlanOfUser;
         }
 
         public async Task<IEnumerable<Categories>> GetCategories()

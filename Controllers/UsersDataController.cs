@@ -22,7 +22,8 @@ namespace CostRegApp2.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("costs/{id}")]
         public async Task<IActionResult> GetCosts(int id)
         {
             var costs = await _repository.GetCostsOfUser(id);
@@ -31,20 +32,20 @@ namespace CostRegApp2.Controllers
             return Ok(costsToReturn);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("income/{id}")]
         public async Task<IActionResult> GetIncome(int id)
         {
             var income = await _repository.GetIncomeOfUser(id);
-            var incomeToReturn = _mapper.Map<IncomeDto>(income);
+            var incomeToReturn = _mapper.Map<IEnumerable<IncomeDto>>(income);
 
             return Ok(incomeToReturn);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("costplans/{id}")]
         public async Task<IActionResult> GetCostPlans(int id)
         {
             var costPlan = await _repository.GetCostPlanOfUser(id);
-            var costPlanToReturn = _mapper.Map<CostPlansDto>(costPlan);
+            var costPlanToReturn = _mapper.Map<IEnumerable<CostPlansDto>>(costPlan);
 
             return Ok(costPlanToReturn);
         }

@@ -1,3 +1,39 @@
-<p>
-  costs works!
-</p>
+<form [formGroup]="costForm" (ngSubmit)="saveCost()">
+
+    <h1>Uj kiadas rogzitese</h1>
+
+    <div class="form-group">
+        Datum
+        <input type="datetime" formControlName="date">
+    </div>
+
+    <label>Kategoria</label>
+    <select class="custom-select" (change)="changeCategory($event)" formControlName="categories">
+        <option *ngFor="let category of categories" [ngValue]="category">
+            {{category}}
+        </option>
+    </select>
+
+    <label>Uzlet</label>
+    <select class="custom-select" (change)="changeShop($event)" formControlName="shops">
+        <option *ngFor="let shop of shops" [ngValue]="shop">
+            {{shop}}
+        </option>
+    </select> -->
+
+    <div class="form-group ">
+        Osszeg
+        <input type="number " class="form-control is-invalid " formControlName="costAmount ">
+        <div class="invalid-feedback ">Az osszeget kotelezo megadni!</div>
+    </div>
+
+    <div class="form-group ">
+        Megjegyzes
+        <input type="text " class="form-control " formControlName="additionalInfo ">
+    </div>
+
+    <div class="form-group text-center ">
+        <button [disabled]="!editForm.dirty " type="submit " class="btn btn-primary ">Ment</button>
+    </div>
+
+</form>

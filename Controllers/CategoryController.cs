@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Linq;
 using CostRegApp2.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,9 @@ namespace CostRegApp2.Controllers
         public async Task<IActionResult> GetCategories()
         {
             var cats = await _repo.GetCategories();
+            var catNames = cats.Select(c => c.CategoryName);
 
-            return Ok(cats);
+            return Ok(catNames);
         }
     }
 }

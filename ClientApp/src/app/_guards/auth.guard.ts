@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 
 @Injectable({
@@ -11,7 +10,7 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
     if (this.authService.loggedIn()) {
           return true;
-      }
+    }
     this.router.navigate(['./.']);
     alert('Az oldal megtekintesehez be kell jelentkeznie!');
     return false;
