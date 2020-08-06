@@ -8,9 +8,23 @@ namespace CostRegApp2.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Costs, CostDto>();
+            CreateMap<Costs, CostDto>()
+                .ForMember(m => m.CategoryName, opt => opt.MapFrom(source => source.Category.CategoryName))
+                .ForMember(m => m.ShopName, opt => opt.MapFrom(source => source.Shop.ShopName));
+
             CreateMap<Income, IncomeDto>();
-            CreateMap<CostPlans, CostPlansDto>();
+
+            CreateMap<CostPlans, CostPlansDto>()
+                .ForMember(m => m.CategoryName, opt => opt.MapFrom(source => source.Category.CategoryName));
+
+            CreateMap<CostDto, Costs>()
+                .ForPath(m => m.Category.CategoryName, opt => opt.MapFrom(source => source.CategoryName))
+                .ForPath(m => m.Shop.ShopName, opt => opt.MapFrom(source => source.ShopName));
+
+            CreateMap<IncomeDto, Income>();
+
+            CreateMap<CostPlansDto, CostPlans>()
+                .ForPath(m => m.Category.CategoryName, opt => opt.MapFrom(source => source.CategoryName));
         }
     }
 }

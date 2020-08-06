@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CostRegApp2.Data;
 using CostRegApp2.DTOs;
 using CostRegApp2.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,24 @@ namespace CostRegApp2.Controllers
             return Ok(costsToReturn);
         }
 
+        [HttpPost]
+        [Route("saveCost/{id}")]
+        public async Task<IActionResult> SaveCostAsync([FromBody] CostDto newCost, int id)
+        {
+            var costsToSave = _mapper.Map<Costs>(newCost);
+            costsToSave.UserId = id;
+            _repository.Add(costsToSave);
+
+            var saveSucceeed = await _repository.SaveAll();
+
+            if (!saveSucceeed)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
         [HttpGet("income/{id}")]
         public async Task<IActionResult> GetIncome(int id)
         {
@@ -41,6 +60,23 @@ namespace CostRegApp2.Controllers
             return Ok(incomeToReturn);
         }
 
+        [HttpPost]
+        [Route("saveIncome/{id}")]
+        public async Task<IActionResult> SaveCostAsync([FromBody] IncomeDto newIncome, int id)
+        {
+            var incomeToSave = _mapper.Map<Income>(newIncome);
+            incomeToSave.UserId = id;
+            _repository.Add(incomeToSave);
+            var saveSucceeed = await _repository.SaveAll();
+
+            if (!saveSucceeed)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
         [HttpGet("costplans/{id}")]
         public async Task<IActionResult> GetCostPlans(int id)
         {
@@ -48,6 +84,23 @@ namespace CostRegApp2.Controllers
             var costPlanToReturn = _mapper.Map<IEnumerable<CostPlansDto>>(costPlan);
 
             return Ok(costPlanToReturn);
+        }
+
+        [HttpPost]
+        [Route("saveCostPlan/{id}")]
+        public async Task<IActionResult> SaveCostAsync([FromBody] CostPlansDto newCostPlan, int id)
+        {
+            var costPlansToSave = _mapper.Map<CostPlans>(newCostPlan);
+            costPlansToSave.UserId = id;
+            _repository.Add(costPlansToSave);
+            var saveSucceeed = await _repository.SaveAll();
+
+            if (!saveSucceeed)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }
