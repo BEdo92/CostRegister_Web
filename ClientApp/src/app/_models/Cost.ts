@@ -1,7 +1,7 @@
 export interface Cost {
-    date: Date;
-    costAmount: number;
-    category: string;
-    shop: string;
+    dateOfCost: Date;
+    amountOfCost: number;
+    categoryName: string;
+    shopName: string;
     additionalInformation?: string;
 }

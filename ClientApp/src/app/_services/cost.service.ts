@@ -3,6 +3,8 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Cost } from '../_models/Cost';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +12,16 @@ import { Observable } from 'rxjs';
 
 export class CostService {
   baseUrl = environment.apiUrl;
-  
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getCosts(id): Observable<Cost[]> {
     return this.http.get<Cost[]>(this.baseUrl + 'usersdata/costs/' + id);
   }
+
+  addCost(model: any) {
+    console.log(this.authService.decodedToken.nameid);
+    return this.http.post(this.baseUrl + 'usersdata/saveCost/' + this.authService.decodedToken.nameid, model);
+  }
+
 }

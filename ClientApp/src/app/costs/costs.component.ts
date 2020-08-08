@@ -4,7 +4,7 @@ import { CostService } from '../_services/cost.service';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryServiceService } from '../_services/category.service';
 import { ShopService } from '../_services/shop.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-costs',
@@ -16,29 +16,35 @@ export class CostsComponent implements OnInit {
   costs: Cost[];
   categories: string[];
   shops: string[];
-
   costForm: FormGroup;
+  newCost: Cost;
 
   constructor(private costService: CostService,
     private routes: ActivatedRoute,
     private categoryService: CategoryServiceService,
-    private shopService: ShopService) { }
+    private shopService: ShopService,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.costForm = new FormGroup({
-      costAmount: new FormControl('0 Ft', Validators.required),
-      date: new FormControl(),
-      categories: new FormControl(),
-      shops: new FormControl(),
-      additionalInfo: new FormControl('reszletek', Validators.maxLength(100))
-    });
+    this.createCostForm();
     
     this.routes.data.subscribe(data => {
       this.costs = data['costs'];
     });
+
     // this.loadPreviousCosts();
     this.loadCategories();
     this.loadShops();
+  }
+
+  createCostForm() {
+    this.costForm = this.fb.group({
+      dateOfCost: ['', Validators.required],
+      amountOfCost: ['0', Validators.required],
+      categoryName: [],
+      shopName:[],
+      additionalInformation: ['Megjegyzes', Validators.maxLength(100)]
+    });
   }
 
   loadCategories() {
@@ -58,8 +64,18 @@ export class CostsComponent implements OnInit {
   }
 
   saveCost() {
-    alert('Mentes sikeres!');
-    console.log(this.costForm.value);
+    if (this.costForm.valid) {
+        this.newCost = Object.assign({}, this.costForm.value);
+        this.costService.addCost(this.newCost).subscribe(next => {
+          console.log('Data saved successfully!');
+        }, error => {
+          console.log('Failed to save data!');
+          alert('Adatmentes sikertelen!');
+        });
+
+        console.log(this.newCost);
+        alert('Mentes sikeres!');
+    }
   }
 
    changeCategory(e) {

@@ -4,32 +4,35 @@
 
     <div class="form-group">
         Datum
-        <input type="datetime" formControlName="date">
+        <input type="date" [ngClass]="{'is-invalid': costForm.get('dateOfCost').errors && costForm.get('dateOfCost').touched}" class="form-control" formControlName="dateOfCost">
+        <div class="invalid-feedback ">A datumot kotelezo megadni!</div>
     </div>
 
     <label>Kategoria</label>
-    <select class="custom-select" (change)="changeCategory($event)" formControlName="categories">
+    <select class="custom-select" (change)="changeCategory($event)" formControlName="categoryName">
         <option *ngFor="let category of categories" [ngValue]="category">
             {{category}}
         </option>
     </select>
 
     <label>Uzlet</label>
-    <select class="custom-select" (change)="changeShop($event)" formControlName="shops">
+    <select class="custom-select" (change)="changeShop($event)" formControlName="shopName">
         <option *ngFor="let shop of shops" [ngValue]="shop">
             {{shop}}
         </option>
-    </select> -->
+    </select>
 
-    <div class="form-group ">
+    <div class="form-group">
         Osszeg
-        <input type="number " class="form-control is-invalid " formControlName="costAmount ">
+        <input type="number" [ngClass]="{'is-invalid': costForm.get('amountOfCost').errors 
+        && costForm.get('amountOfCost').touched}" class="form-control" formControlName="amountOfCost">
         <div class="invalid-feedback ">Az osszeget kotelezo megadni!</div>
     </div>
 
     <div class="form-group ">
         Megjegyzes
-        <input type="text " class="form-control " formControlName="additionalInfo ">
+        <input type="text " class="form-control " formControlName="additionalInformation" [ngClass]="{'is-invalid': costForm.get('additionalInformation').errors}">
+        <div class="invalid-feedback ">A megjegyzes maximum 100 karakter hosszu lehet!</div>
     </div>
 
     <div class="form-group text-center ">
