@@ -40,7 +40,7 @@ export class CostsComponent implements OnInit {
   createCostForm() {
     this.costForm = this.fb.group({
       dateOfCost: ['', Validators.required],
-      amountOfCost: ['0', Validators.required],
+      amountOfCost: ['', Validators.required],
       categoryName: [],
       shopName:[],
       additionalInformation: ['Megjegyzes', Validators.maxLength(100)]
@@ -68,13 +68,13 @@ export class CostsComponent implements OnInit {
         this.newCost = Object.assign({}, this.costForm.value);
         this.costService.addCost(this.newCost).subscribe(next => {
           console.log('Data saved successfully!');
+          alert('Mentes sikeres!');
         }, error => {
           console.log('Failed to save data!');
           alert('Adatmentes sikertelen!');
         });
 
         console.log(this.newCost);
-        alert('Mentes sikeres!');
     }
   }
 

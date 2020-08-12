@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent implements OnInit {
-
   isExpanded = false;
   model: any = {};
 
@@ -24,6 +24,7 @@ export class NavMenuComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
 
   login() {
     this.authService.login(this.model).subscribe(next => {

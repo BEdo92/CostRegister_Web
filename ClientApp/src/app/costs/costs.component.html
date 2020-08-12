@@ -5,38 +5,38 @@
     <div class="form-group">
         Datum
         <input type="date" [ngClass]="{'is-invalid': costForm.get('dateOfCost').errors && costForm.get('dateOfCost').touched}" class="form-control" formControlName="dateOfCost">
-        <div class="invalid-feedback ">A datumot kotelezo megadni!</div>
+        <div class="invalid-feedback" *ngIf="costForm.get('dateOfCost').hasError('required') 
+        && costForm.get('dateOfCost').touched">A datumot kotelezo megadni!</div>
     </div>
 
     <label>Kategoria</label>
-    <select class="custom-select" (change)="changeCategory($event)" formControlName="categoryName">
-        <option *ngFor="let category of categories" [ngValue]="category">
+    <select class="custom-select " (change)="changeCategory($event) " formControlName="categoryName ">
+        <option *ngFor="let category of categories " [ngValue]="category ">
             {{category}}
         </option>
     </select>
 
     <label>Uzlet</label>
-    <select class="custom-select" (change)="changeShop($event)" formControlName="shopName">
-        <option *ngFor="let shop of shops" [ngValue]="shop">
+    <select class="custom-select " (change)="changeShop($event) " formControlName="shopName ">
+        <option *ngFor="let shop of shops " [ngValue]="shop ">
             {{shop}}
         </option>
     </select>
 
-    <div class="form-group">
+    <div class="form-group ">
         Osszeg
-        <input type="number" [ngClass]="{'is-invalid': costForm.get('amountOfCost').errors 
-        && costForm.get('amountOfCost').touched}" class="form-control" formControlName="amountOfCost">
-        <div class="invalid-feedback ">Az osszeget kotelezo megadni!</div>
+        <input type="number " [ngClass]="{ 'is-invalid': costForm.get( 'amountOfCost').errors && costForm.get( 'amountOfCost').touched} " class="form-control " formControlName="amountOfCost ">
+        <div class="invalid-feedback " *ngIf="costForm.get( 'amountOfCost').hasError('required') && costForm.get( 'amountOfCost').touched">Az osszeget kotelezo megadni!</div>
     </div>
 
     <div class="form-group ">
         Megjegyzes
-        <input type="text " class="form-control " formControlName="additionalInformation" [ngClass]="{'is-invalid': costForm.get('additionalInformation').errors}">
-        <div class="invalid-feedback ">A megjegyzes maximum 100 karakter hosszu lehet!</div>
+        <input type="text " class="form-control " formControlName="additionalInformation " [ngClass]="{ 'is-invalid': costForm.get( 'additionalInformation').errors} ">
+        <div class="invalid-feedback " *ngIf="costForm.get( 'additionalInformation').hasError( 'maxlength') && costForm.get( 'additionalInformation').touched">A megjegyzes maximum 100 karakter hosszu lehet!</div>
     </div>
 
-    <div class="form-group text-center ">
-        <button [disabled]="!editForm.dirty " type="submit " class="btn btn-primary ">Ment</button>
+    <div class="form-group text-center">
+        <button type="submit " class="btn btn-primary ">Ment</button>
     </div>
 
 </form>
