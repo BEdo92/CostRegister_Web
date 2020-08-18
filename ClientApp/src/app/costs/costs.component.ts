@@ -13,7 +13,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 })
 
 export class CostsComponent implements OnInit {
-  costs: Cost[];
+  existingCosts: Cost[];
   categories: string[];
   shops: string[];
   costForm: FormGroup;
@@ -27,12 +27,8 @@ export class CostsComponent implements OnInit {
 
   ngOnInit() {
     this.createCostForm();
-    
-    this.routes.data.subscribe(data => {
-      this.costs = data['costs'];
-    });
 
-    // this.loadPreviousCosts();
+    this.loadPreviousCosts();
     this.loadCategories();
     this.loadShops();
   }
@@ -84,12 +80,12 @@ export class CostsComponent implements OnInit {
   changeShop(e) {
   }
 
-  // loadPreviousCosts() {
-  //   this.costService.getCosts(+this.routes.snapshot.params['id']).subscribe((costs: Cost[]) => {
-  //       this.costs = costs;
-  //   }, error => {
-  //     alert(error);
-  //   });
-  // }
+  loadPreviousCosts() {
+    this.costService.getCosts().subscribe((existingCosts: Cost[]) => {
+        this.existingCosts = existingCosts;
+    }, error => {
+      alert(error);
+    });
+  }
 
 }

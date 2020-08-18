@@ -15,8 +15,8 @@ export class CostService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getCosts(id): Observable<Cost[]> {
-    return this.http.get<Cost[]>(this.baseUrl + 'usersdata/costs/' + id);
+  getCosts(): Observable<Cost[]> {
+    return this.http.get<Cost[]>(this.baseUrl + 'usersdata/costs/' + this.authService.decodedToken.nameid);
   }
 
   addCost(model: any) {

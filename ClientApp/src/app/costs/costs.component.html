@@ -29,9 +29,9 @@
         <div class="invalid-feedback " *ngIf="costForm.get( 'amountOfCost').hasError('required') && costForm.get( 'amountOfCost').touched">Az osszeget kotelezo megadni!</div>
     </div>
 
-    <div class="form-group ">
+    <div class="form-group">
         Megjegyzes
-        <input type="text " class="form-control " formControlName="additionalInformation " [ngClass]="{ 'is-invalid': costForm.get( 'additionalInformation').errors} ">
+        <input type="text " class="form-control" formControlName="additionalInformation" [ngClass]="{ 'is-invalid': costForm.get( 'additionalInformation').errors} ">
         <div class="invalid-feedback " *ngIf="costForm.get( 'additionalInformation').hasError( 'maxlength') && costForm.get( 'additionalInformation').touched">A megjegyzes maximum 100 karakter hosszu lehet!</div>
     </div>
 
@@ -40,3 +40,22 @@
     </div>
 
 </form>
+
+<h1>Korabbi kiadasok</h1>
+
+<table>
+    <tr>
+        <th>Datum</th>
+        <th>Kategoria</th>
+        <th>Uzlet</th>
+        <th>Osszeg</th>
+        <th>Megjegyzes</th>
+    </tr>
+    <tr *ngFor="let cost of existingCosts">
+        <td>{{cost.dateOfCost}}</td>
+        <td>{{cost.categoryName}}</td> <!-- TODO: fix this-->
+        <td>{{cost.shopName}}</td>
+        <td>{{cost.amountOfCost}} Ft</td>
+        <td>{{cost.additionalInformation}}</td>
+    </tr>
+</table>
