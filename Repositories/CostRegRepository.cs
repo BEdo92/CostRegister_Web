@@ -1,6 +1,7 @@
 ﻿using CostRegApp2.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CostRegApp2.Repositories
@@ -26,21 +27,27 @@ namespace CostRegApp2.Repositories
 
         public async Task<IEnumerable<Costs>> GetCostsOfUser(int id)
         {
-            var costsOfUser = await _context.Costs.Include(u => u.User).ToListAsync();
+            var costsOfUser = await _context.Costs.Where(u => u.User.UserId == id)
+                .Include(c => c.Category)
+                .Include(s => s.Shop)
+                .ToListAsync();
 
             return costsOfUser;
         }
 
         public async Task<IEnumerable<Income>> GetIncomeOfUser(int id)
         {
-            var incomeOfUser = await _context.Income.Include(u => u.User).ToListAsync();
+            var incomeOfUser = await _context.Income.Where(u => u.User.UserId == id).ToListAsync();
 
             return incomeOfUser;
         }
 
         public async Task<IEnumerable<CostPlans>> GetCostPlanOfUser(int id)
         {
-            var costPlanOfUser = await _context.CostPlans.Include(u => u.User).ToListAsync();
+            var costPlanOfUser = await _context.CostPlans
+                .Where(u => u.User.UserId == id)
+                .Include(c => c.Category)
+                .ToListAsync();
 
             return costPlanOfUser;
         }

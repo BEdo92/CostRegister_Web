@@ -5,7 +5,7 @@
     <div class="form-group ">
         Felhasznalonev
         <input type="text " class="form-control " formControlName="userName" [ngClass]="{'is-invalid': registerForm.get('userName').errors  && registerForm.get('userName').touched}">
-        <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required')  && registerForm.get('password').touched">
+        <div class="invalid-feedback" *ngIf="registerForm.get('userName').hasError('required')  && registerForm.get('userName').touched">
             Kotelezoen megadando!</div>
     </div>
 

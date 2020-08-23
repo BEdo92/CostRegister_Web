@@ -37,8 +37,8 @@ export class CostsComponent implements OnInit {
     this.costForm = this.fb.group({
       dateOfCost: ['', Validators.required],
       amountOfCost: ['', Validators.required],
-      categoryName: [],
-      shopName:[],
+      categoryName: [''],
+      shopName: [''],
       additionalInformation: ['Megjegyzes', Validators.maxLength(100)]
     });
   }

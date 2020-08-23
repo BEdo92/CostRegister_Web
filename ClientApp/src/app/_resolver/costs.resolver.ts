@@ -16,7 +16,7 @@ export class CostsResolver implements Resolve<Cost> {
     
     resolve(): import("rxjs").Observable<Cost> {
         let id = this.authService.decodedToken.nameid;
-        return this.costService.getCosts(id).pipe(
+        return this.costService.getCosts().pipe(
             catchError(error => {
                 alert('Hiba tortent az adatok lekerdezese soran!');
                 this.router.navigate(['/']);

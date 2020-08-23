@@ -3,7 +3,7 @@
 namespace CostRegApp2.Data
 {
     public class CostRegContext : DbContext
-    { 
+    {
         public CostRegContext(DbContextOptions<CostRegContext> options) : base(options) { }
 
         public DbSet<Categories> Categories { get; set; }
@@ -44,6 +44,32 @@ namespace CostRegApp2.Data
              .WithOne(p => p.User);
 
             //base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Categories>().HasData(
+              new Categories { CategoryId = 1, CategoryName = "Rezsi" },
+              new Categories { CategoryId = 2, CategoryName = "Lakbér" },
+              new Categories { CategoryId = 3, CategoryName = "Élelmiszer, háztartás" },
+              new Categories { CategoryId = 4, CategoryName = "Ruházat" },
+              new Categories { CategoryId = 5, CategoryName = "Sport" },
+              new Categories { CategoryId = 6, CategoryName = "Hobbi" },
+              new Categories { CategoryId = 7, CategoryName = "Egészség" },
+              new Categories { CategoryId = 8, CategoryName = "Háztartási gépek, karbantartás" },
+              new Categories { CategoryId = 9, CategoryName = "Extra" },
+              new Categories { CategoryId = 10, CategoryName = "Egyéb" });
+
+            modelBuilder.Entity<Shops>().HasData(
+              new Shops { ShopId = 1, ShopName = "Aldi" },
+              new Shops { ShopId = 2, ShopName = "Auchan" },
+              new Shops { ShopId = 3, ShopName = "Bershka" },
+              new Shops { ShopId = 4, ShopName = "C&A" },
+              new Shops { ShopId = 5, ShopName = "NewYorker" },
+              new Shops { ShopId = 6, ShopName = "Penny Market" },
+              new Shops { ShopId = 7, ShopName = "Lidl" },
+              new Shops { ShopId = 8, ShopName = "MediaMarkt" },
+              new Shops { ShopId = 9, ShopName = "Rossmann" },
+              new Shops { ShopId = 10, ShopName = "Reál" },
+              new Shops { ShopId = 11, ShopName = "Tesco" },
+              new Shops { ShopId = 12, ShopName = "Nem üzlet" });
         }
     }
 }
