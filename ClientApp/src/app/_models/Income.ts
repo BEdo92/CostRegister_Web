@@ -1,6 +1,6 @@
 export interface Income {
     typeOfIncome: string;
     amountOfIncome: number;
-    DateOFIncome: Date;
+    dateOfIncome: Date;
     additionalInformation?: string;
 }

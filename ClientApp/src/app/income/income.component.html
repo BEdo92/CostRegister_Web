@@ -1,3 +1,51 @@
-<p>
-  income works!
-</p>
+<form [formGroup]="incomeForm" (ngSubmit)="saveIncome()">
+
+  <h1>Uj bevetel rogzitese</h1>
+
+  <div class="form-group">
+    Tipus (pl. fizetes...)
+    <input type="text" class="form-control" formControlName="typeOfIncome" [ngClass]="{'is-invalid': incomeForm.get('typeOfIncome').errors} ">
+    <div class="invalid-feedback" *ngIf="incomeForm.get('typeOfIncome').hasError('required') && incomeForm.get( 'typeOfIncome').touched">Kotelezoen kitoltendo!</div>
+</div>
+
+  <div class="form-group">
+      Datum
+      <input type="date" [ngClass]="{'is-invalid': incomeForm.get('dateOfIncome').errors && incomeForm.get('dateOfIncome').touched}" class="form-control" formControlName="dateOfIncome">
+      <div class="invalid-feedback" *ngIf="incomeForm.get('dateOfIncome').hasError('required') 
+      && incomeForm.get('dateOfIncome').touched">A datumot kotelezo megadni!</div>
+  </div>
+
+  <div class="form-group">
+      Osszeg
+      <input type="number" class="form-control" formControlName="amountOfIncome" [ngClass]="{'is-invalid': incomeForm.get('amountOfIncome').errors && incomeForm.get('amountOfIncome').touched}" >
+      <div class="invalid-feedback" *ngIf="incomeForm.get('amountOfIncome').hasError('required') && incomeForm.get('amountOfIncome').touched">Az osszeget kotelezo megadni!</div>
+  </div>
+
+  <div class="form-group">
+      Megjegyzes
+      <input type="text" class="form-control" formControlName="additionalInformation" [ngClass]="{'is-invalid': incomeForm.get('additionalInformation').errors} ">
+      <div class="invalid-feedback " *ngIf="incomeForm.get('additionalInformation').hasError('maxlength') && incomeForm.get( 'additionalInformation').touched">A megjegyzes maximum 100 karakter hosszu lehet!</div>
+  </div>
+
+  <div class="form-group text-center">
+      <button type="submit" class="btn btn-primary ">Ment</button>
+  </div>
+
+</form>
+
+<h1>Korabbi bevetelek</h1>
+
+<table>
+  <tr>
+    <th>Tipus</th>  
+    <th>Datum</th>
+      <th>Osszeg</th>
+      <th>Megjegyzes</th>
+  </tr>
+  <tr *ngFor="let income of existingIncome">
+    <td>{{income.typeOfIncome}}</td>  
+    <td>{{income.dateOfIncome}}</td>
+      <td>{{income.amountOfIncome}} Ft</td>
+      <td>{{income.additionalInformation}}</td>
+  </tr>
+</table>
