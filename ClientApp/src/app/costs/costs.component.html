@@ -16,16 +16,17 @@
                 {{category}}
             </option>
         </select>
-        <div class="invalid-feedback " *ngIf="costForm.get('categoryName').hasError('required') && costForm.get('categoryName').touched">A kategoriat kotelezo kivalasztani!</div>
+        <div class="invalid-feedback" *ngIf="costForm.get('categoryName').hasError('required') && costForm.get('categoryName').touched">A kategoriat kotelezo kivalasztani!</div>
     </div>
 
     <div class="form-group ">
         <label>Uzlet</label>
-        <select class="custom-select" (change)="changeShop($event)" formControlName="shopName ">
+        <select class="custom-select" (change)="changeShop($event)" formControlName="shopName">
             <option *ngFor="let shop of shops " [ngValue]="shop ">
                 {{shop}}
             </option>
         </select>
+        <div class="invalid-feedback" *ngIf="costForm.get('shopName').hasError('required') && costForm.get('shopName').touched">A kategoriat kotelezo kivalasztani!</div>
     </div>
 
     <div class="form-group ">

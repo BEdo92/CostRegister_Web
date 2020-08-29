@@ -15,6 +15,7 @@ namespace CostRegApp2.Data
         public DateTime DateOfCost { get; set; }
         [MaxLength(100)]
         public string AdditionalInformation { get; set; }
+        public DateTime CreatedAt { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
         public Categories Category { get; set; }

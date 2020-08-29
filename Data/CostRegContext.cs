@@ -21,27 +21,39 @@ namespace CostRegApp2.Data
         {
             modelBuilder.Entity<Categories>()
                 .HasMany(c => c.Costs)
-                .WithOne(c => c.Category);
+                .WithOne(c => c.Category)
+                .HasForeignKey(k => k.CategoryID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Categories>()
                 .HasMany(c => c.CostPlans)
-                .WithOne(c => c.Category);
+                .WithOne(c => c.Category)
+                .HasForeignKey(k => k.CategoryID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Shops>()
                 .HasMany(c => c.Costs)
-                .WithOne(p => p.Shop);
+                .WithOne(p => p.Shop)
+                .HasForeignKey(k => k.ShopID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<User>()
-             .HasMany(c => c.Costs)
-             .WithOne(p => p.User);
+                .HasMany(c => c.Costs)
+                .WithOne(p => p.User)
+                .HasForeignKey(k => k.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
              .HasMany(c => c.CostPlans)
-             .WithOne(p => p.User);
+             .WithOne(p => p.User)
+             .HasForeignKey(k => k.UserId)
+             .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
              .HasMany(c => c.Income)
-             .WithOne(p => p.User);
+             .WithOne(p => p.User)
+             .HasForeignKey(k => k.UserId)
+             .OnDelete(DeleteBehavior.Cascade);
 
             //base.OnModelCreating(modelBuilder);
 

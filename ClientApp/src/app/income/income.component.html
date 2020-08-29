@@ -10,7 +10,7 @@
 
   <div class="form-group">
       Datum
-      <input type="date" [ngClass]="{'is-invalid': incomeForm.get('dateOfIncome').errors && incomeForm.get('dateOfIncome').touched}" class="form-control" formControlName="dateOfIncome">
+      <input type="date" class="form-control" formControlName="dateOfIncome" [ngClass]="{'is-invalid': incomeForm.get('dateOfIncome').errors && incomeForm.get('dateOfIncome').touched}">
       <div class="invalid-feedback" *ngIf="incomeForm.get('dateOfIncome').hasError('required') 
       && incomeForm.get('dateOfIncome').touched">A datumot kotelezo megadni!</div>
   </div>

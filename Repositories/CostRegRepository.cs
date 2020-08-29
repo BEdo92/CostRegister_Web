@@ -15,10 +15,6 @@ namespace CostRegApp2.Repositories
             _context = context;
         }
 
-        public void Add<T>(T entity) where T : class
-        {
-            _context.Add(entity);
-        }
 
         public void Delete<T>(T entity) where T : class
         {
@@ -27,12 +23,17 @@ namespace CostRegApp2.Repositories
 
         public async Task<IEnumerable<Costs>> GetCostsOfUser(int id)
         {
-            var costsOfUser = await _context.Costs.Where(u => u.User.UserId == id)
+            var costsOfUser = _context.Costs.Where(u => u.User.UserId == id)
                 .Include(c => c.Category)
                 .Include(s => s.Shop)
                 .ToListAsync();
 
-            return costsOfUser;
+            return await costsOfUser;
+        }
+
+        public void Add<T>(T entity)
+        {
+            _context.Add(entity);
         }
 
         public async Task<IEnumerable<Income>> GetIncomeOfUser(int id)
@@ -69,6 +70,18 @@ namespace CostRegApp2.Repositories
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+        
+        public async Task<int> GetIdOutOfShopName(string shopName)
+        {
+            var retrievedData = await _context.Shops.FirstOrDefaultAsync(sn => sn.ShopName == shopName);
+            return retrievedData.ShopId;
+        }
+
+        public async Task<int> GetIdOutOfCategoryName(string categoryName)
+        {
+            var retrievedData = await _context.Categories.FirstOrDefaultAsync(sn => sn.CategoryName == categoryName);
+            return retrievedData.CategoryId;
         }
     }
 }

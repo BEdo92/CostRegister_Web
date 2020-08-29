@@ -4,6 +4,7 @@ using CostRegApp2.DTOs;
 using CostRegApp2.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -37,10 +38,9 @@ namespace CostRegApp2.Controllers
         [Route("saveCost/{id}")]
         public async Task<IActionResult> SaveCostAsync([FromBody] CostDto newCost, int id)
         {
-            var costsToSave = _mapper.Map<Costs>(newCost);
-            costsToSave.UserId = id;
-            _repository.Add(costsToSave);
+            Costs costsToSave = await GetCostObjectToSave(newCost, id); // TODO: How to use AutoMapper here? What was the problem with AutoMapper here?
 
+            _repository.Add(costsToSave);
             var saveSucceeed = await _repository.SaveAll();
 
             if (!saveSucceeed)
@@ -62,11 +62,13 @@ namespace CostRegApp2.Controllers
 
         [HttpPost]
         [Route("saveIncome/{id}")]
-        public async Task<IActionResult> SaveCostAsync([FromBody] IncomeDto newIncome, int id)
+        public async Task<IActionResult> SaveIncomeAsync([FromBody] IncomeDto newIncome, int id)
         {
             var incomeToSave = _mapper.Map<Income>(newIncome);
             incomeToSave.UserId = id;
+            incomeToSave.CreatedAt = DateTime.Now;
             _repository.Add(incomeToSave);
+
             var saveSucceeed = await _repository.SaveAll();
 
             if (!saveSucceeed)
@@ -88,10 +90,10 @@ namespace CostRegApp2.Controllers
 
         [HttpPost]
         [Route("saveCostPlan/{id}")]
-        public async Task<IActionResult> SaveCostAsync([FromBody] CostPlansDto newCostPlan, int id)
+        public async Task<IActionResult> SaveCostPlanAsync([FromBody] CostPlansDto newCostPlan, int id)
         {
-            var costPlansToSave = _mapper.Map<CostPlans>(newCostPlan);
-            costPlansToSave.UserId = id;
+            var costPlansToSave = await GetCostPlanObjectToSave(newCostPlan, id);
+
             _repository.Add(costPlansToSave);
             var saveSucceeed = await _repository.SaveAll();
 
@@ -101,6 +103,38 @@ namespace CostRegApp2.Controllers
             }
 
             return Ok();
+        }
+
+        private async Task<CostPlans> GetCostPlanObjectToSave(CostPlansDto costPlansDto,int id)
+        {
+            var categoryId = await _repository.GetIdOutOfCategoryName(costPlansDto.CategoryName);
+
+            return new CostPlans
+            {
+                CategoryID = categoryId,
+                UserId = id,
+                PlanAdditionalInformation = costPlansDto.PlanAdditionalInformation,
+                DateOfPlan = costPlansDto.DateOfPlan,
+                TypeOfCostPlan = costPlansDto.TypeOfCostPlan,
+                CostPlanned = costPlansDto.CostPlanned
+            };
+        }
+
+        private async Task<Costs> GetCostObjectToSave(CostDto newCost, int id)
+        {
+            var categoryId = await _repository.GetIdOutOfCategoryName(newCost.CategoryName);
+            var shopId = await _repository.GetIdOutOfShopName(newCost.ShopName);
+
+            return new Costs
+            {
+                CategoryID = categoryId,
+                ShopID = shopId,
+                UserId = id,
+                AdditionalInformation = newCost.AdditionalInformation,
+                CreatedAt = DateTime.Now,
+                DateOfCost = newCost.DateOfCost,
+                AmountOfCost = newCost.AmountOfCost
+            };
         }
     }
 }

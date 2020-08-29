@@ -4,14 +4,16 @@ using CostRegApp2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CostRegApp2.Migrations
 {
     [DbContext(typeof(CostRegContext))]
-    partial class CostRegContextModelSnapshot : ModelSnapshot
+    [Migration("20200828174748_CreatedAtAdded")]
+    partial class CreatedAtAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,7 +309,7 @@ namespace CostRegApp2.Migrations
                     b.HasOne("CostRegApp2.Data.Categories", "Category")
                         .WithMany("CostPlans")
                         .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CostRegApp2.Data.User", "User")
@@ -322,13 +324,13 @@ namespace CostRegApp2.Migrations
                     b.HasOne("CostRegApp2.Data.Categories", "Category")
                         .WithMany("Costs")
                         .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CostRegApp2.Data.Shops", "Shop")
                         .WithMany("Costs")
                         .HasForeignKey("ShopID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CostRegApp2.Data.User", "User")
