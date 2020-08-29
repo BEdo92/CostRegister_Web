@@ -52,10 +52,11 @@ export class IncomeComponent implements OnInit {
 
   loadPreviousIncome() {
     this.incomeService.getIncome().subscribe((existingIncome: Income[]) => {
-        this.existingIncome = existingIncome;
+        this.existingIncome = existingIncome; // TODO: API sends the date but the row is blanc in table
     }, error => {
       alert(error);
     });
+    console.log(this.existingIncome);
   }
 
 }
