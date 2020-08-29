@@ -1,2 +1,2 @@
 # CostRegister_Web
-App for learning ASP.NET Core API and Entity Framework Core (code first) with Angular frontend.
+App for learning how to build a simple ASP.NET Core app with Angular frontend.
