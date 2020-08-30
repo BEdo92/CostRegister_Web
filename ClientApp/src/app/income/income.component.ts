@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Income } from '../_models/Income';
 import { IncomeService } from '../_services/income.service';
+import { BalanceService } from '../_services/balance.service';
 
 @Component({
   selector: 'app-costs',
@@ -14,10 +15,12 @@ export class IncomeComponent implements OnInit {
   existingIncome: Income[];
   incomeForm: FormGroup;
   newIncome: Income;
+  balance: number;
 
   constructor(private incomeService: IncomeService,
     private routes: ActivatedRoute,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private balanceService: BalanceService) { }
 
   ngOnInit() {
     this.createIncomeForm();
@@ -47,6 +50,9 @@ export class IncomeComponent implements OnInit {
 
         console.log(this.newIncome);
     }
+    else {
+      alert('Az urlap nincs megfeleloen kitoltve!');
+    }
   }
 
 
@@ -56,7 +62,14 @@ export class IncomeComponent implements OnInit {
     }, error => {
       alert(error);
     });
-    console.log(this.existingIncome);
+  }
+
+  loadBalance() {
+    this.balanceService.getBalance().subscribe((balance: number) => {
+      this.balance = balance;
+    }, error => {
+      alert(error);
+    });
   }
 
 }

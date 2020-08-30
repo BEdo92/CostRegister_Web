@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CategoryServiceService } from '../_services/category.service';
 import { ShopService } from '../_services/shop.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { BalanceService } from '../_services/balance.service';
 
 @Component({
   selector: 'app-costs',
@@ -18,12 +19,14 @@ export class CostsComponent implements OnInit {
   shops: string[];
   costForm: FormGroup;
   newCost: Cost;
+  balance: number;
 
   constructor(private costService: CostService,
     private routes: ActivatedRoute,
     private categoryService: CategoryServiceService,
     private shopService: ShopService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private balanceService: BalanceService) { }
 
   ngOnInit() {
     this.createCostForm();
@@ -31,6 +34,7 @@ export class CostsComponent implements OnInit {
     this.loadPreviousCosts();
     this.loadCategories();
     this.loadShops();
+    this.loadBalance();
   }
 
   createCostForm() {
@@ -71,6 +75,10 @@ export class CostsComponent implements OnInit {
         });
 
         console.log(this.newCost);
+        this.loadBalance();
+    }
+    else {
+      alert('Az urlap nincs megfeleloen kitoltve!');
     }
   }
 
@@ -83,6 +91,14 @@ export class CostsComponent implements OnInit {
   loadPreviousCosts() {
     this.costService.getCosts().subscribe((existingCosts: Cost[]) => {
         this.existingCosts = existingCosts;
+    }, error => {
+      alert(error);
+    });
+  }
+
+  loadBalance() {
+    this.balanceService.getBalance().subscribe((balance: number) => {
+      this.balance = balance;
     }, error => {
       alert(error);
     });

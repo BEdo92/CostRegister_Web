@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CostRegApp2.Controllers
@@ -79,6 +80,22 @@ namespace CostRegApp2.Controllers
             return Ok();
         }
 
+        [HttpGet("balance/{id}")]
+        public async Task<IActionResult> GetBalance(int id)
+        {
+            var income = await _repository.GetIncomeOfUser(id);
+            var costs = await _repository.GetCostsOfUser(id);
+            var costPlans = await _repository.GetCostPlanOfUser(id);
+
+            var incomeAmount = income.Sum(s => s.AmountOfIncome);
+            var costAmount = costs.Sum(s => s.AmountOfCost);
+            var costPlanAmount = costPlans.Sum(s => s.CostPlanned);
+
+            var balanceToReturn = incomeAmount - costAmount - costPlanAmount;
+
+            return Ok(balanceToReturn);
+        }
+
         [HttpGet("costplans/{id}")]
         public async Task<IActionResult> GetCostPlans(int id)
         {
@@ -114,7 +131,7 @@ namespace CostRegApp2.Controllers
                 CategoryID = categoryId,
                 UserId = id,
                 PlanAdditionalInformation = costPlansDto.PlanAdditionalInformation,
-                DateOfPlan = costPlansDto.DateOfPlan,
+                DateOfPlan = DateTime.Now,
                 TypeOfCostPlan = costPlansDto.TypeOfCostPlan,
                 CostPlanned = costPlansDto.CostPlanned
             };

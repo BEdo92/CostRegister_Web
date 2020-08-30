@@ -9,7 +9,7 @@
         && costForm.get('dateOfCost').touched">A datumot kotelezo megadni!</div>
     </div>
 
-    <div class="form-group ">
+    <div class="form-group">
         <label>Kategoria</label>
         <select class="custom-select" (change)="changeCategory($event)" formControlName="categoryName">
             <option *ngFor="let category of categories" [ngValue]="category">
@@ -19,7 +19,7 @@
         <div class="invalid-feedback" *ngIf="costForm.get('categoryName').hasError('required') && costForm.get('categoryName').touched">A kategoriat kotelezo kivalasztani!</div>
     </div>
 
-    <div class="form-group ">
+    <div class="form-group">
         <label>Uzlet</label>
         <select class="custom-select" (change)="changeShop($event)" formControlName="shopName">
             <option *ngFor="let shop of shops " [ngValue]="shop ">
@@ -46,6 +46,10 @@
     </div>
 
 </form>
+
+<p>
+    Egyenleg: {{balance}} Ft
+</p>
 
 <h1>Korabbi kiadasok</h1>
 
