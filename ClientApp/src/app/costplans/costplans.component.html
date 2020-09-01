@@ -3,6 +3,17 @@
   <h1>Uj koltsegterv rogzitese</h1>
 
   <div class="form-group">
+    Cim (pl. haztartasi nagygep...)
+    <input type="text" class="form-control" formControlName="typeOfCostPlan"
+      [ngClass]="{'is-invalid': costPlanForm.get('typeOfCostPlan').errors}">
+    <div class="invalid-feedback"
+      *ngIf="costPlanForm.get('typeOfCostPlan').hasError('required') && costPlanForm.get('typeOfCostPlan').touched">
+      Kotelezoen
+      kitoltendo!
+    </div>
+  </div>
+
+  <div class="form-group">
     Kategoria
     <select class="custom-select" (change)="changeCategory($event)" formControlName="categoryName">
       <option [ngValue]="category" *ngFor="let category of categories">
@@ -12,33 +23,21 @@
   </div>
 
   <div class="form-group">
-    Cim (pl. haztartasi nagygep...)
-    <input type="text" class="form-control" formControlName="typeOfCostPlan"
-           [ngClass]="{'is-invalid': costPlanForm.get('typeOfCostPlan').errors} ">
-    <div class="invalid-feedback"
-         *ngIf="costPlanForm.get('typeOfCostPlan').hasError('required') && costPlanForm.get('typeOfCostPlan').touched">
-      Kotelezoen
-      kitoltendo!
-    </div>
-  </div>
-
-  <div class="form-group">
     Tervezett osszeg
     <input type="number" class="form-control" formControlName="costPlanned"
-           [ngClass]="{'is-invalid': costPlanForm.get('costPlanned').errors && costPlanForm.get('amountOfCost').touched}">
+      [ngClass]="{'is-invalid': costPlanForm.get('costPlanned').errors && costPlanForm.get('costPlanned').touched}">
     <div class="invalid-feedback"
-         *ngIf="costPlanForm.get('costPlanned').hasError('required') && costPlanForm.get('costPlanned').touched">
-      Az
-      osszeget kotelezo megadni!
-    </div>
+      *ngIf="costPlanForm.get('costPlanned').hasError('required') && costPlanForm.get('costPlanned').touched">Az
+      osszeget
+      kotelezo megadni!</div>
   </div>
 
   <div class="form-group">
     Megjegyzes
     <input type="text" class="form-control" formControlName="planAdditionalInformation"
-           [ngClass]="{'is-invalid': costPlanForm.get('planAdditionalInformation').errors} ">
+      [ngClass]="{'is-invalid': costPlanForm.get('planAdditionalInformation').errors} ">
     <div class="invalid-feedback "
-         *ngIf="costPlanForm.get('planAdditionalInformation').hasError('maxlength') && costPlanForm.get( 'planAdditionalInformation').touched">
+      *ngIf="costPlanForm.get('planAdditionalInformation').hasError('maxlength') && costPlanForm.get( 'planAdditionalInformation').touched">
       A megjegyzes maximum 100 karakter hosszu lehet!
     </div>
   </div>
@@ -58,10 +57,10 @@
 <table id="formerIncome" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>
-      <th class="th-sm">Datum</th>
+      <th class="th-sm">Cím</th>
       <th class="th-sm">Kategoria</th>
-      <th class="th-sm">Uzlet</th>
       <th class="th-sm">Osszeg</th>
+      <th class="th-sm">Datum</th>
       <th class="th-sm">Megjegyzes</th>
     </tr>
   </thead>
@@ -69,8 +68,8 @@
     <tr *ngFor="let cost of existingCostPlans">
       <td>{{cost.typeOfCostPlan}}</td>
       <td>{{cost.categoryName}}</td>
-      <td>{{cost.costPlanned}}</td>
-      <td>{{cost.dateOfPlan}} Ft</td>
+      <td>{{cost.costPlanned}} Ft</td>
+      <td>{{cost.dateOfPlan | date: 'yyyy.MM.dd'}}</td>
       <td>{{cost.planAdditionalInformation}}</td>
     </tr>
   </tbody>

@@ -13,10 +13,10 @@
 
   <div class="form-group">
     Datum
-    <input type="date" class="form-control" formControlName="dateOfIncome"
-      [ngClass]="{'is-invalid': incomeForm.get('dateOfIncome').errors && incomeForm.get('dateOfIncome').touched}">
-    <div class="invalid-feedback" *ngIf="incomeForm.get('dateOfIncome').hasError('required') 
-      && incomeForm.get('dateOfIncome').touched">A datumot kotelezo megadni!</div>
+    <input type="date" class="form-control" formControlName="dateOFIncome"
+      [ngClass]="{'is-invalid': incomeForm.get('dateOFIncome').errors && incomeForm.get('dateOFIncome').touched}">
+    <div class="invalid-feedback" *ngIf="incomeForm.get('dateOFIncome').hasError('required') 
+      && incomeForm.get('dateOFIncome').touched">A datumot kotelezo megadni!</div>
   </div>
 
   <div class="form-group">
@@ -30,10 +30,10 @@
 
   <div class="form-group">
     Megjegyzes
-    <input type="text" class="form-control" formControlName="additionalInformation"
-      [ngClass]="{'is-invalid': incomeForm.get('additionalInformation').errors} ">
+    <input type="text" class="form-control" formControlName="incomeAdditionalInformation"
+      [ngClass]="{'is-invalid': incomeForm.get('incomeAdditionalInformation').errors} ">
     <div class="invalid-feedback "
-      *ngIf="incomeForm.get('additionalInformation').hasError('maxlength') && incomeForm.get( 'additionalInformation').touched">
+      *ngIf="incomeForm.get('incomeAdditionalInformation').hasError('maxlength') && incomeForm.get( 'incomeAdditionalInformation').touched">
       A megjegyzes maximum 100 karakter hosszu lehet!</div>
   </div>
 
@@ -61,9 +61,9 @@
   <tbody>
     <tr *ngFor="let income of existingIncome">
       <th scope="row">{{income.typeOfIncome}}</th>
-      <td>{{income.dateOfIncome}}</td>
+      <td>{{income.dateOFIncome | date: 'yyyy.MM.dd'}}</td>
       <td>{{income.amountOfIncome}} Ft</td>
-      <td>{{income.additionalInformation}}</td>
+      <td>{{income.incomeAdditionalInformation}}</td>
     </tr>
   </tbody>
 </table>

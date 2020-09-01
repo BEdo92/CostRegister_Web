@@ -26,14 +26,15 @@ export class IncomeComponent implements OnInit {
     this.createIncomeForm();
 
     this.loadPreviousIncome();
+    this.loadBalance();
   }
 
   createIncomeForm() {
     this.incomeForm = this.fb.group({
       typeOfIncome: ['', [Validators.required, Validators.maxLength(100)]],
       amountOfIncome: ['', Validators.required],
-      dateOfIncome: ['', Validators.required],
-      additionalInformation: ['Megjegyzes', Validators.maxLength(100)]
+      dateOFIncome: ['', Validators.required],
+      incomeAdditionalInformation: ['Megjegyzes', Validators.maxLength(100)]
     });
   }
 
@@ -71,5 +72,6 @@ export class IncomeComponent implements OnInit {
       alert(error);
     });
   }
+
 
 }
