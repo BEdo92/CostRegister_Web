@@ -25,7 +25,7 @@ namespace CostRegApp2.Controllers
         public async Task<IActionResult> GetCategories()
         {
             var cats = await _repo.GetCategories();
-            var catNames = cats.Select(c => c.CategoryName);
+            var catNames = cats.Select(c => c.CategoryName).OrderBy(c => c);
 
             return Ok(catNames);
         }

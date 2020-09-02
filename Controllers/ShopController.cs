@@ -25,7 +25,7 @@ namespace CostRegApp2.Controllers
         public async Task<IActionResult> GetShops()
         {
             var shops = await _repo.GetShops();
-            var shopNames = shops.Select(s => s.ShopName);
+            var shopNames = shops.Select(s => s.ShopName).OrderBy(s => s);
 
             return Ok(shopNames);
         }

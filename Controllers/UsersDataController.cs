@@ -30,7 +30,8 @@ namespace CostRegApp2.Controllers
         public async Task<IActionResult> GetCosts(int id)
         {
             var costs = await _repository.GetCostsOfUser(id);
-            var costsToReturn = _mapper.Map<IEnumerable<CostDto>>(costs);
+            var costsToReturn = _mapper.Map<IEnumerable<CostDto>>(costs)
+                .OrderByDescending(cost => cost.DateOfCost);
 
             return Ok(costsToReturn);
         }
@@ -56,7 +57,8 @@ namespace CostRegApp2.Controllers
         public async Task<IActionResult> GetIncome(int id)
         {
             var income = await _repository.GetIncomeOfUser(id);
-            var incomeToReturn = _mapper.Map<IEnumerable<IncomeDto>>(income);
+            var incomeToReturn = _mapper.Map<IEnumerable<IncomeDto>>(income)
+                .OrderByDescending(oldincome => oldincome.DateOFIncome);
 
             return Ok(incomeToReturn);
         }
@@ -100,7 +102,8 @@ namespace CostRegApp2.Controllers
         public async Task<IActionResult> GetCostPlans(int id)
         {
             var costPlan = await _repository.GetCostPlanOfUser(id);
-            var costPlanToReturn = _mapper.Map<IEnumerable<CostPlansDto>>(costPlan);
+            var costPlanToReturn = _mapper.Map<IEnumerable<CostPlansDto>>(costPlan)
+                .OrderByDescending(costpl => costpl.DateOfPlan);
 
             return Ok(costPlanToReturn);
         }
