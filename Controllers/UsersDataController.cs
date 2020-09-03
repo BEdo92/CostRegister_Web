@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace CostRegApp2.Controllers
@@ -108,6 +109,25 @@ namespace CostRegApp2.Controllers
             return Ok(costPlanToReturn);
         }
 
+        [HttpGet("plansrealize/{id}")]
+        public async Task<IActionResult> GetPlansToRealizeThem(int id)
+        {
+            var costPlan = await _repository.GetCostPlanOfUser(id);
+
+            var realCostFromPlan = costPlan.Select(p => new RealCostFromPlan
+            {
+                Id = p.ID,
+                DatePlanned = p.DateOfPlan,
+                Cost = p.CostPlanned,
+                Title = p.TypeOfCostPlan,
+                AdditionalInformation = p.PlanAdditionalInformation,
+                CategoryName = _repository.GetCategoryFromId(p.CategoryID),
+                Data = $"{p.DateOfPlan} - {p.TypeOfCostPlan} - {p.CostPlanned}"
+            });
+
+            return Ok(realCostFromPlan);
+        }
+
         [HttpPost]
         [Route("saveCostPlan/{id}")]
         public async Task<IActionResult> SaveCostPlanAsync([FromBody] CostPlansDto newCostPlan, int id)
@@ -125,7 +145,7 @@ namespace CostRegApp2.Controllers
             return Ok();
         }
 
-        private async Task<CostPlans> GetCostPlanObjectToSave(CostPlansDto costPlansDto,int id)
+        private async Task<CostPlans> GetCostPlanObjectToSave(CostPlansDto costPlansDto, int id)
         {
             var categoryId = await _repository.GetIdOutOfCategoryName(costPlansDto.CategoryName);
 

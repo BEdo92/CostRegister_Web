@@ -3,8 +3,24 @@
     <h1>Uj kiadas rogzitese</h1>
 
     <div class="form-group">
+        Korabbi koltsegvetesi terv megvalositasa
+        <input formControlName="formerPlans" type="checkbox" (change)="formerToggle()">
+    </div>
+
+    <div class="form-group" *ngIf="needToLoadCostPlans">
+        <label>Korabbi tervek</label>
+        <select class="custom-select" (change)="selectPlan($event)" formControlName="formerPlans">
+            <option *ngFor="let plan of plans" [ngValue]="plan">
+                {{plan.data}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
         Datum
-        <input type="date" [ngClass]="{'is-invalid': costForm.get('dateOfCost').errors && costForm.get('dateOfCost').touched}" class="form-control" formControlName="dateOfCost">
+        <input type="date"
+            [ngClass]="{'is-invalid': costForm.get('dateOfCost').errors && costForm.get('dateOfCost').touched}"
+            class="form-control" formControlName="dateOfCost">
         <div class="invalid-feedback" *ngIf="costForm.get('dateOfCost').hasError('required') 
         && costForm.get('dateOfCost').touched">A datumot kotelezo megadni!</div>
     </div>
@@ -16,7 +32,9 @@
                 {{category}}
             </option>
         </select>
-        <div class="invalid-feedback" *ngIf="costForm.get('categoryName').hasError('required') && costForm.get('categoryName').touched">A kategoriat kotelezo kivalasztani!</div>
+        <div class="invalid-feedback"
+            *ngIf="costForm.get('categoryName').hasError('required') && costForm.get('categoryName').touched">A
+            kategoriat kotelezo kivalasztani!</div>
     </div>
 
     <div class="form-group">
@@ -26,23 +44,31 @@
                 {{shop}}
             </option>
         </select>
-        <div class="invalid-feedback" *ngIf="costForm.get('shopName').hasError('required') && costForm.get('shopName').touched">A kategoriat kotelezo kivalasztani!</div>
+        <div class="invalid-feedback"
+            *ngIf="costForm.get('shopName').hasError('required') && costForm.get('shopName').touched">A kategoriat
+            kotelezo kivalasztani!</div>
     </div>
 
     <div class="form-group">
         Osszeg
-        <input type="number" class="form-control" formControlName="amountOfCost" [ngClass]="{'is-invalid': costForm.get('amountOfCost').errors && costForm.get('amountOfCost').touched}" >
-        <div class="invalid-feedback" *ngIf="costForm.get('amountOfCost').hasError('required') && costForm.get('amountOfCost').touched">Az osszeget kotelezo megadni!</div>
+        <input type="number" class="form-control" formControlName="amountOfCost"
+            [ngClass]="{'is-invalid': costForm.get('amountOfCost').errors && costForm.get('amountOfCost').touched}">
+        <div class="invalid-feedback"
+            *ngIf="costForm.get('amountOfCost').hasError('required') && costForm.get('amountOfCost').touched">Az
+            osszeget kotelezo megadni!</div>
     </div>
 
     <div class="form-group">
         Megjegyzes
-        <input type="text" class="form-control" formControlName="additionalInformation" [ngClass]="{'is-invalid': costForm.get('additionalInformation').errors} ">
-        <div class="invalid-feedback " *ngIf="costForm.get('additionalInformation').hasError('maxlength') && costForm.get( 'additionalInformation').touched">A megjegyzes maximum 100 karakter hosszu lehet!</div>
+        <input type="text" class="form-control" formControlName="additionalInformation"
+            [ngClass]="{'is-invalid': costForm.get('additionalInformation').errors} ">
+        <div class="invalid-feedback "
+            *ngIf="costForm.get('additionalInformation').hasError('maxlength') && costForm.get( 'additionalInformation').touched">
+            A megjegyzes maximum 100 karakter hosszu lehet!</div>
     </div>
 
     <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary ">Ment</button>
+        <button type="submit" class="btn btn-primary">Ment</button>
     </div>
 
 </form>
@@ -55,21 +81,21 @@
 
 <table id="formerIncome" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
     <thead>
-      <tr>
-       <th class="th-sm">Datum</th>
-       <th class="th-sm">Kategoria</th>
-       <th class="th-sm">Uzlet</th>
-       <th class="th-sm">Osszeg</th>
-       <th class="th-sm">Megjegyzes</th>
-      </tr>
+        <tr>
+            <th class="th-sm" sortable-column>Datum</th>
+            <th class="th-sm">Kategoria</th>
+            <th class="th-sm">Uzlet</th>
+            <th class="th-sm">Osszeg</th>
+            <th class="th-sm">Megjegyzes</th>
+        </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cost of existingCosts">
-        <td>{{cost.dateOfCost | date: 'yyyy.MM.dd'}}</td>
-        <td>{{cost.categoryName}}</td> 
-        <td>{{cost.shopName}}</td> 
-        <td>{{cost.amountOfCost}} Ft</td>
-        <td>{{cost.additionalInformation}}</td>
-      </tr>
+        <tr *ngFor="let cost of existingCosts">
+            <td>{{cost.dateOfCost | date: 'yyyy.MM.dd'}}</td>
+            <td>{{cost.categoryName}}</td>
+            <td>{{cost.shopName}}</td>
+            <td>{{cost.amountOfCost }} Ft</td>
+            <td>{{cost.additionalInformation}}</td>
+        </tr>
     </tbody>
-  </table>
+</table>

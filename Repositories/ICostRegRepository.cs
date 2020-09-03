@@ -16,5 +16,6 @@ namespace CostRegApp2.Repositories
         Task<IEnumerable<Shops>> GetShops();
         Task<int> GetIdOutOfShopName(string shopName);
         Task<int> GetIdOutOfCategoryName(string categoryName);
+       string GetCategoryFromId(int id);
     }
 }

@@ -60,6 +60,13 @@ namespace CostRegApp2.Repositories
             return categories;
         }
 
+        public string GetCategoryFromId(int id)
+        {
+            var categories = _context.Categories.ToList();
+
+            return categories.FirstOrDefault(c => c.CategoryId == id).CategoryName;
+        }
+
         public async Task<IEnumerable<Shops>> GetShops()
         {
             var shops = await _context.Shops.ToListAsync();
