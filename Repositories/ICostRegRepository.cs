@@ -12,7 +12,7 @@ namespace CostRegApp2.Repositories
         Task<IEnumerable<Costs>> GetCostsOfUser(int id);
         Task<IEnumerable<Income>> GetIncomeOfUser(int id);
         Task<IEnumerable<CostPlans>> GetCostPlanOfUser(int id);
-        Task<IEnumerable<Categories>> GetCategories();
+        Task<IEnumerable<Categories>> GetCategoriesAsync();
         Task<IEnumerable<Shops>> GetShops();
         Task<int> GetIdOutOfShopName(string shopName);
         Task<int> GetIdOutOfCategoryName(string categoryName);

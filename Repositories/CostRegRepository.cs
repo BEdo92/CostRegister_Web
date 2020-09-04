@@ -53,7 +53,7 @@ namespace CostRegApp2.Repositories
             return costPlanOfUser;
         }
 
-        public async Task<IEnumerable<Categories>> GetCategories()
+        public async Task<IEnumerable<Categories>> GetCategoriesAsync()
         {
             var categories = await _context.Categories.ToListAsync();
 

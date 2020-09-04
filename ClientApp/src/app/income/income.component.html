@@ -60,7 +60,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let income of existingIncome">
-      <th scope="row">{{income.typeOfIncome}}</th>
+      <td>{{income.typeOfIncome}}</td>
       <td>{{income.dateOFIncome | date: 'yyyy.MM.dd'}}</td>
       <td>{{income.amountOfIncome}} Ft</td>
       <td>{{income.incomeAdditionalInformation}}</td>

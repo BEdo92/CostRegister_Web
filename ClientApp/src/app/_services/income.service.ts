@@ -14,12 +14,12 @@ export class IncomeService {
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   getIncome(): Observable<Income[]> {
-    return this.http.get<Income[]>(this.baseUrl + 'usersdata/income/' + this.authService.decodedToken.nameid);
+    return this.http.get<Income[]>(this.baseUrl + 'income/income/' + this.authService.decodedToken.nameid);
   }
 
   addIncome(model: any) {
     console.log(this.authService.decodedToken.nameid);
-    return this.http.post(this.baseUrl + 'usersdata/saveIncome/' + this.authService.decodedToken.nameid, model);
+    return this.http.post(this.baseUrl + 'income/saveIncome/' + this.authService.decodedToken.nameid, model);
   }
 
 }

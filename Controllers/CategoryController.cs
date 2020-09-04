@@ -24,7 +24,7 @@ namespace CostRegApp2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var cats = await _repo.GetCategories();
+            var cats = await _repo.GetCategoriesAsync();
             var catNames = cats.Select(c => c.CategoryName).OrderBy(c => c);
 
             return Ok(catNames);

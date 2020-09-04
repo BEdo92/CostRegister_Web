@@ -9,16 +9,16 @@ import { CostPlan } from '../_models/CostPlan';
   providedIn: 'root'
 })
 export class CostplanService {
-baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl;
 
-constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
-getCostPlans(): Observable<CostPlan[]> {
-  return this.http.get<CostPlan[]>(this.baseUrl + 'usersdata/costplans/' + this.authService.decodedToken.nameid);
-}
+  getCostPlans(): Observable<CostPlan[]> {
+    return this.http.get<CostPlan[]>(this.baseUrl + 'costplan/costplans/' + this.authService.decodedToken.nameid);
+  }
 
-addCostPlans(model: any) {
-  console.log(this.authService.decodedToken.nameid);
-  return this.http.post(this.baseUrl + 'usersdata/saveCostPlan/' + this.authService.decodedToken.nameid, model);
-}
+  addCostPlans(model: any) {
+    console.log(this.authService.decodedToken.nameid);
+    return this.http.post(this.baseUrl + 'costplan/saveCostPlan/' + this.authService.decodedToken.nameid, model);
+  }
 }
