@@ -52,6 +52,10 @@ export class CostsComponent implements OnInit {
     });
   }
 
+  get formerPlans() {
+		return this.costForm.get('formerPlans');
+	}
+
   loadCategories() {
     this.categoryService.getCategories().subscribe((categories: string[]) => {
       this.categories = categories;
@@ -82,7 +86,11 @@ export class CostsComponent implements OnInit {
       console.log(this.newCost);
       this.loadBalance();
 
-      // TODO: Delete the plan that was transformed into real cost
+      if (this.needToLoadCostPlans) {
+        if (confirm('Torolni kivanja a kivalasztott koltsegtervet?')) {
+          this.deletePlan();
+        } // TODO temporary solution before setting up Alertify or something similar
+      }
     }
     else {
       alert('Az urlap nincs megfeleloen kitoltve!');
@@ -128,8 +136,26 @@ export class CostsComponent implements OnInit {
   }
 
   selectPlan() {
-    // TODO: fill the form with values from the selected costplan.
-    // save the id of the selected costplan in order to delete the plan when saving the cost
+    let selectedCostPlan: RealCostFromPlan = this.formerPlans.value;
+    console.log(selectedCostPlan);
+
+    this.costForm.setValue({
+      dateOfCost: new Date(),
+      formerPlans: selectedCostPlan,
+      amountOfCost: selectedCostPlan.cost, 
+      categoryName: selectedCostPlan.categoryName,
+      shopName: '',
+      additionalInformation: selectedCostPlan.additionalInformation
+    });
+  }
+
+  deletePlan() {
+    let selectedCostPlan: RealCostFromPlan = this.formerPlans.value;
+    this.costService.deletePlan(selectedCostPlan.id).subscribe(() => {
+      alert('Torles sikeres!');
+    }, error => {
+      alert(error);
+    });
   }
 
 }

@@ -74,7 +74,7 @@ namespace CostRegApp2.Repositories
             return shops;
         }
 
-        public async Task<bool> SaveAll()
+        public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
         }

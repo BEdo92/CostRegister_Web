@@ -53,7 +53,7 @@ namespace CostRegApp2.Controllers
             var costPlansToSave = await GetCostPlanObjectToSave(newCostPlan, userId);
 
             _repository.Add(costPlansToSave);
-            var saveSucceeed = await _repository.SaveAll();
+            var saveSucceeed = await _repository.SaveAllAsync();
 
             if (!saveSucceeed)
             {

@@ -9,7 +9,7 @@
 
     <div class="form-group" *ngIf="needToLoadCostPlans">
         <label>Korabbi tervek</label>
-        <select class="custom-select" (change)="selectPlan($event)" formControlName="formerPlans">
+        <select formControlName="formerPlans" class="custom-select" (change)="selectPlan()" >
             <option *ngFor="let plan of plans" [ngValue]="plan">
                 {{plan.data}}
             </option>

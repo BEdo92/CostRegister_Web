@@ -3,7 +3,6 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Cost } from '../_models/Cost';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { RealCostFromPlan } from '../_models/RealCostFromPlan';
 
@@ -27,6 +26,10 @@ export class CostService {
   addCost(model: any) {
     console.log(this.authService.decodedToken.nameid);
     return this.http.post(this.baseUrl + 'cost/saveCost/' + this.authService.decodedToken.nameid, model);
+  }
+
+  deletePlan(id: number) {
+    return this.http.delete<RealCostFromPlan[]>(this.baseUrl + 'cost/plandelete/' + this.authService.decodedToken.nameid + '/' + id);
   }
 
 }

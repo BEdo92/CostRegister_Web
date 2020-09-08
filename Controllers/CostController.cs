@@ -54,7 +54,7 @@ namespace CostRegApp2.Controllers
             Costs costsToSave = await GetCostObjectToSave(newCost, userId); // TODO: How to use AutoMapper here? What was the problem with AutoMapper here?
 
             _repository.Add(costsToSave);
-            var saveSucceeed = await _repository.SaveAll();
+            var saveSucceeed = await _repository.SaveAllAsync();
 
             if (!saveSucceeed)
             {
@@ -86,6 +86,25 @@ namespace CostRegApp2.Controllers
             });
 
             return Ok(realCostFromPlan);
+        }
+
+        [HttpDelete("plandelete/{userId}/{planId}")]
+        public async Task<IActionResult> DeletePlansAsync(int userId, int planId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var costPlanToDelete = (await _repository.GetCostPlanOfUser(userId)).FirstOrDefault(d => d.ID == planId);
+            _repository.Delete(costPlanToDelete);
+
+            if (await _repository.SaveAllAsync())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         private async Task<Costs> GetCostObjectToSave(CostDto newCost, int id)

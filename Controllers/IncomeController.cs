@@ -55,7 +55,7 @@ namespace CostRegApp2.Controllers
             incomeToSave.CreatedAt = DateTime.Now;
             _repository.Add(incomeToSave);
 
-            var saveSucceeed = await _repository.SaveAll();
+            var saveSucceeed = await _repository.SaveAllAsync();
 
             if (!saveSucceeed)
             {
