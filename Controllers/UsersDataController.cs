@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CostRegApp2.Repositories;
+﻿using CostRegApp2.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -18,6 +17,24 @@ namespace CostRegApp2.Controllers
         public UsersDataController(ICostRegRepository repository)
         {
             _repository = repository;
+        }
+
+        [HttpPost("delete/{userId}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var deleted = _repository.DeleteUser(userId);
+
+            if (deleted && await _repository.SaveAllAsync())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpGet("balance/{userId}")]

@@ -11,7 +11,7 @@
 
     <div class="form-group ">
         Jelszo
-        <input type="text " class="form-control " formControlName="password" [ngClass]="{'is-invalid': registerForm.get('password').errors  && registerForm.get('password').touched}">
+        <input type="password " class="form-control " formControlName="password" [ngClass]="{'is-invalid': registerForm.get('password').errors  && registerForm.get('password').touched}">
         <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required')  && registerForm.get('password').touched">
             Kotelezoen megadando!</div>
         <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength')  && registerForm.get('password').touched">Minimum 8 karakter hosszusagu legyen!</div>
@@ -19,15 +19,15 @@
 
     <div class="form-group ">
         Megerosites
-        <input type="text " class="form-control " formControlName="confirmPassword" [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors  && registerForm.get('confirmPassword').touched || registerForm.get('confirmPassword').touched && registerForm.get('mismatch')}">
+        <input type="password " class="form-control " formControlName="confirmPassword" [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors  && registerForm.get('confirmPassword').touched || registerForm.get('confirmPassword').touched && registerForm.get('mismatch')}">
         <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('required')  && registerForm.get('confirmPassword').touched">
             Kotelezoen kitoltendo!</div>
         <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword').hasError('mismatch')  && registerForm.get('confirmPassword').touched">
             Jelszavak nem egyeznek!</div>
     </div>
 
-    <div class="form-group text-center ">
-        <button type="submit " class="btn btn-primary ">Ment</button>
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">Ment</button>
     </div>
 
 </form>

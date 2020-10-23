@@ -90,5 +90,11 @@ namespace CostRegApp2.Repositories
             var retrievedData = await _context.Categories.FirstOrDefaultAsync(sn => sn.CategoryName == categoryName);
             return retrievedData.CategoryId;
         }
+
+        public bool DeleteUser(int userId)
+        {
+            var deletedEntity = _context.Remove(_context.Users.FirstOrDefault(user => user.UserId == userId));
+            return deletedEntity != null;
+        }
     }
 }
