@@ -16,20 +16,22 @@ import { IncomeComponent } from './income/income.component';
 import { CostplansComponent } from './costplans/costplans.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { CostsResolver } from './_resolver/costs.resolver';
+import { SettingsComponent } from './settings/settings.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
 @NgModule({
-   declarations: [
+   declarations: [		
       AppComponent,
       NavMenuComponent,
       HomeComponent,
       RegisterComponent,
       CostsComponent,
       IncomeComponent,
-      CostplansComponent
+      CostplansComponent,
+      SettingsComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,6 +50,7 @@ export function tokenGetter() {
       { path: 'costs', component: CostsComponent, canActivate: [AuthGuard], resolve: {costs: CostsResolver}},
       { path: 'income', component: IncomeComponent, canActivate: [AuthGuard] },
       { path: 'costplans', component: CostplansComponent, canActivate: [AuthGuard] },
+      { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     ])
   ],
   providers: [ 

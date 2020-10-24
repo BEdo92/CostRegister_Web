@@ -19,7 +19,7 @@ namespace CostRegApp2.Controllers
             _repository = repository;
         }
 
-        [HttpPost("delete/{userId}")]
+        [HttpDelete("delete/{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))

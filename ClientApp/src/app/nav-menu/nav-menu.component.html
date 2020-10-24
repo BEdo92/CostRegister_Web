@@ -19,6 +19,9 @@
                     <li *ngIf="loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
                         <a class="nav-link text-dark" [routerLink]="['/costplans']">Koltsegtervek</a>
                     </li>
+                    <li *ngIf="loggedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+                        <a class="nav-link text-dark" [routerLink]="['/settings']">Beallitasok</a>
+                    </li>
                     <li *ngIf="loggedIn()" class="nav-item">
                         <a class="nav-link text-dark">Szia, {{ authService.decodedToken?.unique_name }}!</a>
                         <a class="dropdown-item" href="#" (click)="logOut()"><i class="fa fa-sign-out"></i>Kilepes</a>
