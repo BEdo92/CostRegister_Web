@@ -61,7 +61,7 @@
     <div class="form-group">
         Megjegyzes
         <input type="text" class="form-control" formControlName="additionalInformation"
-            [ngClass]="{'is-invalid': costForm.get('additionalInformation').errors} ">
+            [ngClass]="{'is-invalid': costForm.get('additionalInformation').errors}">
         <div class="invalid-feedback "
             *ngIf="costForm.get('additionalInformation').hasError('maxlength') && costForm.get( 'additionalInformation').touched">
             A megjegyzes maximum 100 karakter hosszu lehet!</div>
@@ -78,6 +78,8 @@
 </p>
 
 <h1>Korabbi kiadasok</h1>
+
+<button type="button" class="btn btn-primary" (click)="setNumOfShownCosts()">Az osszeset kerem!</button>
 
 <table id="formerIncome" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
     <thead>

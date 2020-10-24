@@ -9,7 +9,7 @@ namespace CostRegApp2.Repositories
         void Add<T>(T entity);
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveAllAsync();
-        Task<IEnumerable<Costs>> GetCostsOfUser(int id);
+        Task<IEnumerable<Costs>> GetCostsOfUser(int id, bool showAllRows);
         Task<IEnumerable<Income>> GetIncomeOfUser(int id);
         Task<IEnumerable<CostPlans>> GetCostPlanOfUser(int id);
         Task<IEnumerable<Categories>> GetCategoriesAsync();

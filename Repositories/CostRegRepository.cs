@@ -21,14 +21,30 @@ namespace CostRegApp2.Repositories
             _context.Remove(entity);
         }
 
-        public async Task<IEnumerable<Costs>> GetCostsOfUser(int id)
+        public async Task<IEnumerable<Costs>> GetCostsOfUser(int id, bool showAllRows)
         {
-            var costsOfUser = _context.Costs.Where(u => u.User.UserId == id)
-                .Include(c => c.Category)
-                .Include(s => s.Shop)
-                .ToListAsync();
+            List<Costs> costsOfUser = new List<Costs>();
 
-            return await costsOfUser;
+            if (showAllRows)
+            {
+                costsOfUser = await _context.Costs.Where(u => u.User.UserId == id)
+                                                  .Include(c => c.Category)
+                                                  .Include(s => s.Shop)
+                                                  .OrderByDescending(order => order.DateOfCost)
+                                                  .ToListAsync();
+            }
+            else
+            {
+                costsOfUser = await _context.Costs.Where(u => u.User.UserId == id)
+                                                  .Include(c => c.Category)
+                                                  .Include(s => s.Shop)
+                                                  .OrderByDescending(order => order.DateOfCost)
+                                                  .Take(10)
+                                                  .ToListAsync();
+
+            }
+
+            return costsOfUser;
         }
 
         public void Add<T>(T entity)
@@ -78,7 +94,7 @@ namespace CostRegApp2.Repositories
         {
             return await _context.SaveChangesAsync() > 0;
         }
-        
+
         public async Task<int> GetIdOutOfShopName(string shopName)
         {
             var retrievedData = await _context.Shops.FirstOrDefaultAsync(sn => sn.ShopName == shopName);

@@ -34,7 +34,7 @@ export class IncomeComponent implements OnInit {
       typeOfIncome: ['', [Validators.required, Validators.maxLength(100)]],
       amountOfIncome: ['', Validators.required],
       dateOFIncome: ['', Validators.required],
-      incomeAdditionalInformation: ['Megjegyzes', Validators.maxLength(100)]
+      incomeAdditionalInformation: ['', Validators.maxLength(100)]
     });
   }
 

@@ -27,17 +27,16 @@ namespace CostRegApp2.Controllers
         }
 
         [HttpGet]
-        [Route("costs/{userId}")]
-        public async Task<IActionResult> GetCostsAsync(int userId)
+        [Route("costs/{userId}/{showAllRows}")]
+        public async Task<IActionResult> GetCostsAsync(int userId, bool showAllRows)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
                 return Unauthorized();
             }
 
-            var costs = await _repository.GetCostsOfUser(userId);
-            var costsToReturn = _mapper.Map<IEnumerable<CostDto>>(costs)
-                .OrderByDescending(cost => cost.DateOfCost);
+            var costs = await _repository.GetCostsOfUser(userId, showAllRows);
+            var costsToReturn = _mapper.Map<IEnumerable<CostDto>>(costs);
 
             return Ok(costsToReturn);
         }

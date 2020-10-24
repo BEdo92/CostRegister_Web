@@ -38,7 +38,7 @@ export class CostplansComponent implements OnInit {
       typeOfCostPlan: ['', Validators.required],
       categoryName: [''],
       costPlanned: ['', Validators.required],
-      planAdditionalInformation: ['Megjegyzes', Validators.maxLength(100)]
+      planAdditionalInformation: ['', Validators.maxLength(100)]
     });
   }
 

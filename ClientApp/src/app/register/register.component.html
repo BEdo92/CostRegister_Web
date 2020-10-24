@@ -1,4 +1,8 @@
-<form [formGroup]="registerForm" (ngSubmit)="register()">
+<p>
+    Tartsa nyilvan beveteleit es kiadasait, kalkulalja bele az elore lathato jovobeni kisebb-nagyobb kiadasait!
+</p>
+
+<form *ngIf="!loggedIn()" [formGroup]="registerForm" (ngSubmit)="register()">
 
     <h2 class="text-center text-primary">Regisztráció</h2>
 

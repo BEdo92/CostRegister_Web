@@ -54,4 +54,8 @@ export class RegisterComponent implements OnInit {
     console.log('cancelled');
   }
 
+  loggedIn() {
+    return this.authService.loggedIn();
+  }
+
 }

@@ -46,7 +46,7 @@ namespace CostRegApp2.Controllers
             }
 
             var income = await _repository.GetIncomeOfUser(userId);
-            var costs = await _repository.GetCostsOfUser(userId);
+            var costs = await _repository.GetCostsOfUser(userId, showAllRows: true);
             var costPlans = await _repository.GetCostPlanOfUser(userId);
 
             var incomeAmount = income.Sum(s => s.AmountOfIncome);

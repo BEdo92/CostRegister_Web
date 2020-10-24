@@ -24,6 +24,7 @@ export class CostsComponent implements OnInit {
   needToLoadCostPlans: boolean;
   plans: RealCostFromPlan[];
   idOfPlanToDelete: number;
+  showAllRows: boolean;
 
   constructor(private costService: CostService,
     private routes: ActivatedRoute,
@@ -34,6 +35,8 @@ export class CostsComponent implements OnInit {
 
   ngOnInit() {
     this.createCostForm();
+
+    this.showAllRows = false;
 
     this.loadPreviousCosts();
     this.loadCategories();
@@ -48,7 +51,7 @@ export class CostsComponent implements OnInit {
       amountOfCost: ['', Validators.required],
       categoryName: [''],
       shopName: [''],
-      additionalInformation: ['Megjegyzes', Validators.maxLength(100)]
+      additionalInformation: ['', Validators.maxLength(100)]
     });
   }
 
@@ -104,7 +107,7 @@ export class CostsComponent implements OnInit {
   }
 
   loadPreviousCosts() {
-    this.costService.getCosts().subscribe((existingCosts: Cost[]) => {
+    this.costService.getCosts(this.showAllRows).subscribe((existingCosts: Cost[]) => {
       this.existingCosts = existingCosts;
     }, error => {
       alert(error);
@@ -156,6 +159,11 @@ export class CostsComponent implements OnInit {
     }, error => {
       alert(error);
     });
+  }
+
+  setNumOfShownCosts() {
+    this.showAllRows = true;
+    this.loadPreviousCosts();
   }
 
 }
