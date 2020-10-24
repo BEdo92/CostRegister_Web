@@ -106,6 +106,25 @@ namespace CostRegApp2.Controllers
             return BadRequest();
         }
 
+        [HttpDelete("costdelete/{userId}/{costId}")]
+        public async Task<IActionResult> DeleteCostAsync(int userId, int costId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var costToDelete = (await _repository.GetCostsOfUser(userId)).FirstOrDefault(d => d.ID == costId);
+            _repository.Delete(costToDelete);
+
+            if (await _repository.SaveAllAsync())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
         private async Task<Costs> GetCostObjectToSave(CostDto newCost, int id)
         {
             var categoryId = await _repository.GetIdOutOfCategoryName(newCost.CategoryName);

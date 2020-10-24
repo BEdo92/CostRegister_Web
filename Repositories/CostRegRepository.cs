@@ -21,6 +21,11 @@ namespace CostRegApp2.Repositories
             _context.Remove(entity);
         }
 
+        public async Task<IEnumerable<Costs>> GetCostsOfUser(int id)
+        {
+            return await GetCostsOfUser(id, true);
+        }
+
         public async Task<IEnumerable<Costs>> GetCostsOfUser(int id, bool showAllRows)
         {
             List<Costs> costsOfUser = new List<Costs>();

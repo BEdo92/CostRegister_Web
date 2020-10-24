@@ -89,6 +89,7 @@
             <th class="th-sm">Uzlet</th>
             <th class="th-sm">Osszeg</th>
             <th class="th-sm">Megjegyzes</th>
+            <th class="th-sm">Torles</th>
         </tr>
     </thead>
     <tbody>
@@ -98,6 +99,7 @@
             <td>{{cost.shopName}}</td>
             <td>{{cost.amountOfCost }} Ft</td>
             <td>{{cost.additionalInformation}}</td>
+            <td><button class="btn btn-sm btn-warning" (click)="deleteCost(cost)">Torol</button></td>
         </tr>
     </tbody>
 </table>

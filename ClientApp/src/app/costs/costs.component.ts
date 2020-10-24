@@ -56,8 +56,8 @@ export class CostsComponent implements OnInit {
   }
 
   get formerPlans() {
-		return this.costForm.get('formerPlans');
-	}
+    return this.costForm.get('formerPlans');
+  }
 
   loadCategories() {
     this.categoryService.getCategories().subscribe((categories: string[]) => {
@@ -145,7 +145,7 @@ export class CostsComponent implements OnInit {
     this.costForm.setValue({
       dateOfCost: new Date(),
       formerPlans: selectedCostPlan,
-      amountOfCost: selectedCostPlan.cost, 
+      amountOfCost: selectedCostPlan.cost,
       categoryName: selectedCostPlan.categoryName,
       shopName: '',
       additionalInformation: selectedCostPlan.additionalInformation
@@ -164,6 +164,16 @@ export class CostsComponent implements OnInit {
   setNumOfShownCosts() {
     this.showAllRows = true;
     this.loadPreviousCosts();
+  }
+
+  deleteCost(cost) {
+    if (confirm('Valoban torolni kivanja az adatot?')) {
+      this.costService.deleteCost(cost.id).subscribe(() => {
+        alert('Torles sikeres!');
+      }, error => {
+        alert(error);
+      });
+    }
   }
 
 }
