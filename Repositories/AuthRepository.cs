@@ -1,24 +1,15 @@
 ﻿using CostRegApp2.Data;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace CostRegApp2.Repositories
 {
-    public class AuthRepository : IAuthRepository
+    public class AuthRepository : CostRegRepository, IAuthRepository
     {
-        private readonly CostRegContext _context;
-
-        public AuthRepository(CostRegContext context)
+        public AuthRepository(CostRegContext context) : base(context)
         {
-            _context = context;
         }
         
         public async Task<User> Login(string userName, string password)

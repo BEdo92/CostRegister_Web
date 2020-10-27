@@ -12,9 +12,9 @@ namespace CostRegApp2.Controllers
     [Authorize]
     public class UsersDataController : ControllerBase
     {
-        private readonly ICostRegRepository _repository;
+        private readonly IUnitOfWork _repository;
 
-        public UsersDataController(ICostRegRepository repository)
+        public UsersDataController(IUnitOfWork repository)
         {
             _repository = repository;
         }
@@ -27,9 +27,9 @@ namespace CostRegApp2.Controllers
                 return Unauthorized();
             }
 
-            var deleted = _repository.DeleteUser(userId);
+            var deleted = _repository.UserRepository.DeleteUser(userId);
 
-            if (deleted && await _repository.SaveAllAsync())
+            if (deleted && await _repository.Complete())
             {
                 return Ok();
             }
@@ -45,9 +45,9 @@ namespace CostRegApp2.Controllers
                 return Unauthorized();
             }
 
-            var income = await _repository.GetIncomeOfUser(userId);
-            var costs = await _repository.GetCostsOfUser(userId);
-            var costPlans = await _repository.GetCostPlanOfUser(userId);
+            var income = await _repository.IncomeRepository.GetIncomeOfUser(userId);
+            var costs = await _repository.CostRepository.GetCostsOfUser(userId);
+            var costPlans = await _repository.CostPlansRepository.GetCostPlanOfUser(userId);
 
             var incomeAmount = income.Sum(s => s.AmountOfIncome);
             var costAmount = costs.Sum(s => s.AmountOfCost);

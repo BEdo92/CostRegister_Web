@@ -17,10 +17,10 @@ namespace CostRegApp2.Controllers
     [Authorize]
     public class CostPlanController : ControllerBase
     {
-        private readonly ICostRegRepository _repository;
+        private readonly IUnitOfWork _repository;
         private readonly IMapper _mapper;
 
-        public CostPlanController(ICostRegRepository repository, IMapper mapper)
+        public CostPlanController(IUnitOfWork repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -34,11 +34,30 @@ namespace CostRegApp2.Controllers
                 return Unauthorized();
             }
 
-            var costPlan = await _repository.GetCostPlanOfUser(userId);
+            var costPlan = await _repository.CostPlansRepository.GetCostPlanOfUser(userId);
             var costPlanToReturn = _mapper.Map<IEnumerable<CostPlansDto>>(costPlan)
                 .OrderByDescending(costpl => costpl.DateOfPlan);
 
             return Ok(costPlanToReturn);
+        }
+
+        [HttpDelete("plandelete/{userId}/{planId}")]
+        public async Task<IActionResult> DeletePlansAsync(int userId, int planId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var costPlanToDelete = (await _repository.CostPlansRepository.GetCostPlanOfUser(userId)).FirstOrDefault(d => d.ID == planId);
+            _repository.CostPlansRepository.Delete(costPlanToDelete);
+
+            if (await _repository.Complete())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         [HttpPost]
@@ -52,8 +71,8 @@ namespace CostRegApp2.Controllers
 
             var costPlansToSave = await GetCostPlanObjectToSave(newCostPlan, userId);
 
-            _repository.Add(costPlansToSave);
-            var saveSucceeed = await _repository.SaveAllAsync();
+            _repository.CostPlansRepository.Add(costPlansToSave);
+            var saveSucceeed = await _repository.Complete();
 
             if (!saveSucceeed)
             {
@@ -65,7 +84,7 @@ namespace CostRegApp2.Controllers
 
         private async Task<CostPlans> GetCostPlanObjectToSave(CostPlansDto costPlansDto, int userId)
         {
-            var categoryId = await _repository.GetIdOutOfCategoryName(costPlansDto.CategoryName);
+            var categoryId = await _repository.CategoryRepository.GetIdOutOfCategoryName(costPlansDto.CategoryName);
 
             return new CostPlans
             {

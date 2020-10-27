@@ -29,7 +29,7 @@ export class CostService {
   }
 
   deletePlan(id: number) {
-    return this.http.delete<RealCostFromPlan[]>(this.baseUrl + 'cost/plandelete/' + this.authService.decodedToken.nameid + '/' + id);
+    return this.http.delete<RealCostFromPlan[]>(this.baseUrl + 'costplan/plandelete/' + this.authService.decodedToken.nameid + '/' + id);
   }
   
   deleteCost(id: number) {

@@ -17,10 +17,10 @@ namespace CostRegApp2.Controllers
     [Authorize]
     public class IncomeController : ControllerBase
     {
-        private readonly ICostRegRepository _repository;
+        private readonly IUnitOfWork _repository;
         private readonly IMapper _mapper;
 
-        public IncomeController(ICostRegRepository repository, IMapper mapper)
+        public IncomeController(IUnitOfWork repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -34,7 +34,7 @@ namespace CostRegApp2.Controllers
                 return Unauthorized();
             }
 
-            var income = await _repository.GetIncomeOfUser(userId);
+            var income = await _repository.IncomeRepository.GetIncomeOfUser(userId);
             var incomeToReturn = _mapper.Map<IEnumerable<IncomeDto>>(income)
                 .OrderByDescending(oldincome => oldincome.DateOFIncome);
 
@@ -53,9 +53,9 @@ namespace CostRegApp2.Controllers
             var incomeToSave = _mapper.Map<Income>(newIncome);
             incomeToSave.UserId = userId;
             incomeToSave.CreatedAt = DateTime.Now;
-            _repository.Add(incomeToSave);
+            _repository.IncomeRepository.Add(incomeToSave);
 
-            var saveSucceeed = await _repository.SaveAllAsync();
+            var saveSucceeed = await _repository.Complete();
 
             if (!saveSucceeed)
             {
@@ -65,7 +65,24 @@ namespace CostRegApp2.Controllers
             return Ok();
         }
 
+        [HttpDelete("incomedelete/{userId}/{incomeId}")]
+        public async Task<IActionResult> DeleteIncomeAsync(int userId, int incomeId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
 
+            var incomeToDelete = (await _repository.IncomeRepository.GetIncomeOfUser(userId)).FirstOrDefault(d => d.IncomeID == incomeId);
+            _repository.IncomeRepository.Delete(incomeToDelete);
+
+            if (await _repository.Complete())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
 
 
     }

@@ -41,8 +41,7 @@ namespace CostRegApp2
 
             services.AddAutoMapper(typeof(CostRegRepository).Assembly);
 
-            services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<ICostRegRepository, CostRegRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             SetupJWTServices(services);
         }

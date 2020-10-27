@@ -12,6 +12,7 @@ namespace CostRegApp2.Data
         public DbSet<Income> Income { get; set; }
         public DbSet<CostPlans> CostPlans { get; set; }
         public DbSet<Shops> Shops { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

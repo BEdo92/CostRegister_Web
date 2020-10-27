@@ -73,5 +73,14 @@ export class IncomeComponent implements OnInit {
     });
   }
 
+  deleteIncome(income) {
+    if (confirm('Valoban torolni kivanja az adatot?')) {
+      this.incomeService.deleteIncome(income.id).subscribe(() => {
+        alert('Torles sikeres!');
+      }, error => {
+        alert(error);
+      });
+    }
+  }
 
 }

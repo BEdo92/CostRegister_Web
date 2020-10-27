@@ -1,2 +1,22 @@
 <button class="btn-primary btn-success my-2 my-sm-0" type="button" (click)="deleteAccount()">Fiok torlese</button>
-                      
+
+<br><br><br>
+<form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+<!-- TODO Implement it properly -->
+    <div>
+        <p>Kidolgozas folyamatban!</p>
+    </div>
+    <div>
+        <input type="radio" value="true" formControlName="includePlansToBalance">
+        <span>Koltsegtervek levonva az egyenlegbol</span>
+    </div>
+    <div>
+        <input type="radio" value="false" formControlName="includePlansToBalance">
+        <span>Koltsegtervek levonasa nelkul</span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Ment</button>
+    </div>
+
+</form>

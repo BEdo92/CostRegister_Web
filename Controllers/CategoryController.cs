@@ -13,9 +13,9 @@ namespace CostRegApp2.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ILogger<CategoryController> _logger;
-        private readonly ICostRegRepository _repo;
+        private readonly IUnitOfWork _repo;
 
-        public CategoryController(ILogger<CategoryController> logger, ICostRegRepository repo)
+        public CategoryController(ILogger<CategoryController> logger, IUnitOfWork repo)
         {
             _logger = logger;
             _repo = repo;
@@ -24,7 +24,7 @@ namespace CostRegApp2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var cats = await _repo.GetCategoriesAsync();
+            var cats = await _repo.CategoryRepository.GetCategoriesAsync();
             var catNames = cats.Select(c => c.CategoryName).OrderBy(c => c);
 
             return Ok(catNames);

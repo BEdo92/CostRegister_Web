@@ -1,16 +1,13 @@
 ﻿using CostRegApp2.Data;
 using CostRegApp2.DTOs;
 using CostRegApp2.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CostRegApp2.Controllers
@@ -19,10 +16,10 @@ namespace CostRegApp2.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthRepository _repo;
+        private readonly IUnitOfWork _repo;
         private readonly IConfiguration _configuration;
 
-        public AuthController(IAuthRepository repo, IConfiguration configuration)
+        public AuthController(IUnitOfWork repo, IConfiguration configuration)
         {
             _repo = repo;
             _configuration = configuration;
@@ -33,7 +30,7 @@ namespace CostRegApp2.Controllers
         {
             var userNameToSave = userDto.UserName.ToLower();
             
-            if (await _repo.UserExists(userNameToSave))
+            if (await _repo.AuthRepository.UserExists(userNameToSave))
             {
                 return BadRequest("Username already exists!");
             }
@@ -44,7 +41,7 @@ namespace CostRegApp2.Controllers
                 Created = DateTime.Now
             };
 
-            var createdUser = await _repo.Register(userToCreate, userDto.Password);
+            var createdUser = await _repo.AuthRepository.Register(userToCreate, userDto.Password);
 
             if (createdUser != null)
             {
@@ -57,7 +54,7 @@ namespace CostRegApp2.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDto userDto)
         {
-            var userFromRepo = await _repo.Login(userDto.UserName, userDto.Password);
+            var userFromRepo = await _repo.AuthRepository.Login(userDto.UserName, userDto.Password);
 
             if (userFromRepo is null)
             {

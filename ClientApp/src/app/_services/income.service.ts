@@ -22,4 +22,8 @@ export class IncomeService {
     return this.http.post(this.baseUrl + 'income/saveIncome/' + this.authService.decodedToken.nameid, model);
   }
 
+  deleteIncome(id: number) {
+    return this.http.delete<Income[]>(this.baseUrl + 'income/incomedelete/' + this.authService.decodedToken.nameid + '/' + id);
+  }
+
 }

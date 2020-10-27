@@ -17,10 +17,10 @@ namespace CostRegApp2.Controllers
     [Authorize]
     public class CostController : ControllerBase
     {
-        private readonly ICostRegRepository _repository;
+        private readonly IUnitOfWork _repository;
         private readonly IMapper _mapper;
 
-        public CostController(ICostRegRepository repository, IMapper mapper)
+        public CostController(IUnitOfWork repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -35,7 +35,7 @@ namespace CostRegApp2.Controllers
                 return Unauthorized();
             }
 
-            var costs = await _repository.GetCostsOfUser(userId, showAllRows);
+            var costs = await _repository.CostRepository.GetCostsOfUser(userId, showAllRows);
             var costsToReturn = _mapper.Map<IEnumerable<CostDto>>(costs);
 
             return Ok(costsToReturn);
@@ -52,8 +52,8 @@ namespace CostRegApp2.Controllers
 
             Costs costsToSave = await GetCostObjectToSave(newCost, userId); // TODO: How to use AutoMapper here? What was the problem with AutoMapper here?
 
-            _repository.Add(costsToSave);
-            var saveSucceeed = await _repository.SaveAllAsync();
+            _repository.CostRepository.Add(costsToSave);
+            var saveSucceeed = await _repository.Complete();
 
             if (!saveSucceeed)
             {
@@ -71,7 +71,7 @@ namespace CostRegApp2.Controllers
                 return Unauthorized();
             }
 
-            var costPlan = await _repository.GetCostPlanOfUser(userId);
+            var costPlan = await _repository.CostPlansRepository.GetCostPlanOfUser(userId);
 
             var realCostFromPlan = costPlan.Select(p => new RealCostFromPlan
             {
@@ -80,30 +80,11 @@ namespace CostRegApp2.Controllers
                 Cost = p.CostPlanned,
                 Title = p.TypeOfCostPlan,
                 AdditionalInformation = p.PlanAdditionalInformation,
-                CategoryName = _repository.GetCategoryFromId(p.CategoryID),
+                CategoryName = _repository.CategoryRepository.GetCategoryFromId(p.CategoryID),
                 Data = $"{p.DateOfPlan} - {p.TypeOfCostPlan} - {p.CostPlanned}"
             });
 
             return Ok(realCostFromPlan);
-        }
-
-        [HttpDelete("plandelete/{userId}/{planId}")]
-        public async Task<IActionResult> DeletePlansAsync(int userId, int planId)
-        {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            {
-                return Unauthorized();
-            }
-
-            var costPlanToDelete = (await _repository.GetCostPlanOfUser(userId)).FirstOrDefault(d => d.ID == planId);
-            _repository.Delete(costPlanToDelete);
-
-            if (await _repository.SaveAllAsync())
-            {
-                return Ok();
-            }
-
-            return BadRequest();
         }
 
         [HttpDelete("costdelete/{userId}/{costId}")]
@@ -114,10 +95,10 @@ namespace CostRegApp2.Controllers
                 return Unauthorized();
             }
 
-            var costToDelete = (await _repository.GetCostsOfUser(userId)).FirstOrDefault(d => d.ID == costId);
-            _repository.Delete(costToDelete);
+            var costToDelete = (await _repository.CostRepository.GetCostsOfUser(userId)).FirstOrDefault(d => d.ID == costId);
+            _repository.CostRepository.Delete(costToDelete);
 
-            if (await _repository.SaveAllAsync())
+            if (await _repository.Complete())
             {
                 return Ok();
             }
@@ -127,8 +108,8 @@ namespace CostRegApp2.Controllers
 
         private async Task<Costs> GetCostObjectToSave(CostDto newCost, int id)
         {
-            var categoryId = await _repository.GetIdOutOfCategoryName(newCost.CategoryName);
-            var shopId = await _repository.GetIdOutOfShopName(newCost.ShopName);
+            var categoryId = await _repository.CategoryRepository.GetIdOutOfCategoryName(newCost.CategoryName);
+            var shopId = await _repository.ShopRepository.GetIdOutOfShopName(newCost.ShopName);
 
             return new Costs
             {

@@ -13,9 +13,9 @@ namespace CostRegApp2.Controllers
     public class ShopController : ControllerBase
     {
         private readonly ILogger<CategoryController> _logger;
-        private readonly ICostRegRepository _repo;
+        private readonly IUnitOfWork _repo;
 
-        public ShopController(ILogger<CategoryController> logger, ICostRegRepository repository)
+        public ShopController(ILogger<CategoryController> logger, IUnitOfWork repository)
         {
             _logger = logger;
             _repo = repository;
@@ -24,7 +24,7 @@ namespace CostRegApp2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShops()
         {
-            var shops = await _repo.GetShops();
+            var shops = await _repo.ShopRepository.GetShops();
             var shopNames = shops.Select(s => s.ShopName).OrderBy(s => s);
 
             return Ok(shopNames);

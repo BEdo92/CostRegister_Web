@@ -56,6 +56,7 @@
      <th class="th-sm">Datum</th>
      <th class="th-sm">Osszeg</th>
      <th class="th-sm">Megjegyzes</th>
+    <th class="th-sm">Akciok</th>
     </tr>
   </thead>
   <tbody>
@@ -64,6 +65,7 @@
       <td>{{income.dateOFIncome | date: 'yyyy.MM.dd'}}</td>
       <td>{{income.amountOfIncome}} Ft</td>
       <td>{{income.incomeAdditionalInformation}}</td>
+      <td><button class="btn btn-sm btn-warning" (click)="deleteIncome(income)">Torol</button></td>
     </tr>
   </tbody>
 </table>
