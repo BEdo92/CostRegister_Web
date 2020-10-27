@@ -18,6 +18,5 @@ namespace CostRegApp2.Data
         public ICollection<Costs> Costs { get; set; }
         public ICollection<Income> Income { get; set; }
         public ICollection<CostPlans> CostPlans { get; set; }
-        public Settings Settings { get; set; }
     }
 }
