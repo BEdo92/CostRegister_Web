@@ -9,7 +9,6 @@ namespace CostRegApp2.Repositories
         ICostRepository CostRepository { get; }
         IIncomeRepository IncomeRepository { get; }
         ICostPlansRepository CostPlansRepository { get; }
-        IAuthRepository AuthRepository { get; }
         IUserRepository UserRepository { get; }
 
         Task<bool> Complete();

@@ -30,7 +30,7 @@ namespace CostRegApp2.Controllers
         {
             var userNameToSave = userDto.UserName.ToLower();
             
-            if (await _repo.AuthRepository.UserExists(userNameToSave))
+            if (await _repo.UserRepository.UserExists(userNameToSave))
             {
                 return BadRequest("Username already exists!");
             }
@@ -41,7 +41,7 @@ namespace CostRegApp2.Controllers
                 Created = DateTime.Now
             };
 
-            var createdUser = await _repo.AuthRepository.Register(userToCreate, userDto.Password);
+            var createdUser = await _repo.UserRepository.Register(userToCreate, userDto.Password);
 
             if (createdUser != null)
             {
@@ -54,7 +54,7 @@ namespace CostRegApp2.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDto userDto)
         {
-            var userFromRepo = await _repo.AuthRepository.Login(userDto.UserName, userDto.Password);
+            var userFromRepo = await _repo.UserRepository.Login(userDto.UserName, userDto.Password);
 
             if (userFromRepo is null)
             {

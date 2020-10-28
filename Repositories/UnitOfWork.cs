@@ -22,8 +22,6 @@ namespace CostRegApp2.Repositories
 
         public ICostPlansRepository CostPlansRepository => new CostPlanRepository(_context);
 
-        public IAuthRepository AuthRepository => new AuthRepository(_context);
-
         public IUserRepository UserRepository => new UserRepository(_context);
 
         public async Task<bool> Complete()
