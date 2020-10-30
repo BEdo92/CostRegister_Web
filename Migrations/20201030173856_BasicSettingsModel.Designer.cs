@@ -4,14 +4,16 @@ using CostRegApp2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CostRegApp2.Migrations
 {
     [DbContext(typeof(CostRegContext))]
-    partial class CostRegContextModelSnapshot : ModelSnapshot
+    [Migration("20201030173856_BasicSettingsModel")]
+    partial class BasicSettingsModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,9 +210,26 @@ namespace CostRegApp2.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Setting");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "IncludePlansInBalance",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "IncludePlansInBalance",
+                            Value = "false"
+                        });
                 });
 
             modelBuilder.Entity("CostRegApp2.Data.Shops", b =>
@@ -329,9 +348,6 @@ namespace CostRegApp2.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

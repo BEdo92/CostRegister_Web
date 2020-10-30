@@ -2,9 +2,10 @@
 {
     public class SettingsDto
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        //public int Id { get; set; }
+        //public int UserId { get; set; }
         public bool PlansShownInBalance { get; set; }
+        public string NameOfSettingValue { get; set; }
 
     }
 }

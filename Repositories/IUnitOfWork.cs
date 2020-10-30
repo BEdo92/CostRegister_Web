@@ -10,6 +10,7 @@ namespace CostRegApp2.Repositories
         IIncomeRepository IncomeRepository { get; }
         ICostPlansRepository CostPlansRepository { get; }
         IUserRepository UserRepository { get; }
+        ISettingsRepository SettingsRepository { get; }
 
         Task<bool> Complete();
         bool HasAnyChanges();

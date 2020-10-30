@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CostRegApp2.Data
 {
@@ -18,5 +16,6 @@ namespace CostRegApp2.Data
         public ICollection<Costs> Costs { get; set; }
         public ICollection<Income> Income { get; set; }
         public ICollection<CostPlans> CostPlans { get; set; }
+        public ICollection<UserSetting> UserSetting { get; set; }
     }
 }

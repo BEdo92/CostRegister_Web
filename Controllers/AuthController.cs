@@ -38,6 +38,7 @@ namespace CostRegApp2.Controllers
             var userToCreate = new User
             {
                 UserName = userNameToSave,
+                Email = userDto.Email,
                 Created = DateTime.Now
             };
 

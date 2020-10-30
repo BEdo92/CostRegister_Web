@@ -41,8 +41,7 @@ namespace CostRegApp2.Controllers
             return Ok(incomeToReturn);
         }
 
-        [HttpPost]
-        [Route("saveIncome/{userId}")]
+        [HttpPost("saveIncome/{userId}")]
         public async Task<IActionResult> SaveIncomeAsync([FromBody] IncomeDto newIncome, int userId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))

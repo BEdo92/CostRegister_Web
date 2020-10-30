@@ -12,6 +12,8 @@ namespace CostRegApp2.Data
         public DbSet<Income> Income { get; set; }
         public DbSet<CostPlans> CostPlans { get; set; }
         public DbSet<Shops> Shops { get; set; }
+        public DbSet<Setting> Setting { get; set; }
+        public DbSet<UserSetting> UserSetting { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -54,6 +56,18 @@ namespace CostRegApp2.Data
              .WithOne(p => p.User)
              .HasForeignKey(k => k.UserId)
              .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(s => s.UserSetting)
+                .WithOne(c => c.User)
+                .HasForeignKey(k => k.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Setting>()
+               .HasMany(s => s.UserSetting)
+               .WithOne(c => c.Setting)
+               .HasForeignKey(k => k.SettingId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             //base.OnModelCreating(modelBuilder);
 

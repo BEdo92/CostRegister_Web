@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
       userName: ['Felhasznalonev', Validators.required],
       password: ['Jelszo', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['Jelszo ismet', Validators.required],
+      email: ['Email']
     }, {validator: this.passwordMatchValidator});
   }
 
@@ -40,7 +41,7 @@ export class RegisterComponent implements OnInit {
         console.log('Data saved successfully!');
         alert('Mentes sikeres!');
       }, error => {
-        console.log('Failed to save data!');
+        console.log(error);
         alert('Adatmentes sikertelen!');
         return;
       });
